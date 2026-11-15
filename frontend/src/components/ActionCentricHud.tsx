@@ -159,114 +159,114 @@ const EMERGENCY_PROTOCOLS: Record<Exclude<FaultMode, "NOMINAL">, EmergencyProtoc
     code: "ALM-RESP-01 // HYPOXIA",
     faultZone: "LUNGS",
     hevZone: "respiratory",
-    title: "ОСТРАЯ ГИПОКСИЯ // КРИТИЧЕСКАЯ ДЕСАТУРАЦИЯ (SpO2 < 85%)",
-    rootCause: "ПАДЕНИЕ ПАРЦИАЛЬНОГО ДАВЛЕНИЯ O2 В ДЫХАТЕЛЬНОМ КОНТУРЕ (< 14.0 kPa) -> АЛЬВЕОЛЯРНАЯ ГИПОКСИЯ",
+    title: "ACUTE HYPOXIA // CRITICAL DESATURATION (SpO2 < 85%)",
+    rootCause: "O2 PARTIAL PRESSURE DROP IN BREATHING LOOP (< 14.0 kPa) -> ALVEOLAR HYPOXIA",
     kitCode: "MED-KIT O2-MASK [B-02] / KIT ECLSS-03",
-    kitName: "КИСЛОРОДНАЯ МАСКА ВЫСОКОГО ПОТОКА (DEMAND O2 MASK) + БАЛЛОН 100% O2",
-    kitLocation: "МЕДИЦИНСКИЙ ШЛЮЗ B-02 (ПЕРЕДНЯЯ ПЕРЕБОРКА)",
+    kitName: "HIGH-FLOW DEMAND O2 MASK + 100% O2 CYLINDER",
+    kitLocation: "MEDICAL AIRLOCK B-02 (FORWARD BULKHEAD)",
     instructions: [
-      "НАДЕТЬ КИСЛОРОДНУЮ МАСКУ (O2 MASK) НА ЧЛЕНА ЭКИПАЖА И ВКЛЮЧИТЬ ПРОДУВКУ 100% O2 (15 Л/МИН)",
-      "ПЕРЕКЛЮЧИТЬ КЛАПАН ПОДАЧИ СКАФАНДРА НА РЕЗЕРВНЫЙ КОНТУР ВЫСОКОГО ДАВЛЕНИЯ [AUX-O2 OPEN]",
-      "КОНТРОЛИРОВАТЬ ПОДЪЕМ SpO2 ВЫШЕ 92.0% И ВОССТАНОВЛЕНИЕ ПАРЦИАЛЬНОГО ДАВЛЕНИЯ PaO2",
-      "ЗАПУСТИТЬ 30-СЕКУНДНЫЙ ТАЙМЕР УДЕРЖАНИЯ (HOLD TIME 30s) ДЛЯ ВЕРИФИКАЦИИ ВЫЗДОРОВЛЕНИЯ",
+      "DON DEMAND O2 MASK ON CREWMEMBER AND ENGAGE 100% O2 PURGE (15 L/MIN)",
+      "SWITCH SUIT SUPPLY VALVE TO HIGH-PRESSURE BACKUP LOOP [AUX-O2 OPEN]",
+      "MONITOR SpO2 RECOVERY ABOVE 92.0% AND PaO2 PARTIAL PRESSURE RESTORATION",
+      "START 30-SECOND HOLD TIMER (HOLD TIME 30s) TO VERIFY RECOVERY",
     ],
-    holdCriteria: "SpO2 >= 92.0% И PaO2 >= 80 mmHg УДЕРЖИВАЮТСЯ В ТЕЧЕНИЕ 30.0 СЕКУНД",
+    holdCriteria: "SpO2 >= 92.0% AND PaO2 >= 80 mmHg SUSTAINED FOR 30.0 SECONDS",
   },
   HEMORRHAGE: {
     code: "ALM-CARD-02 // HEMORRHAGE",
     faultZone: "HEART",
     hevZone: "cardiovascular",
-    title: "ГЕМОРРАГИЧЕСКИЙ ШОК III СТ. // ПАДЕНИЕ ДАВЛЕНИЯ И ТАХИКАРДИЯ",
-    rootCause: "ОСТРАЯ АРТЕРИАЛЬНАЯ КРОВОПОТЕРЯ -> ГИПОВОЛЕМИЯ (АД < 80/50 mmHg, ПУЛЬС > 130 BPM, SI > 1.8)",
+    title: "CLASS III HEMORRHAGIC SHOCK // HYPOTENSION & TACHYCARDIA",
+    rootCause: "ACUTE ARTERIAL BLOOD LOSS -> HYPOVOLEMIA (BP < 80/50 mmHg, HR > 130 BPM, SI > 1.8)",
     kitCode: "TRAUMA-KIT [KIT A-1]",
-    kitName: "ЖГУТ-ТУРНИКЕТ A-1 (C-A-T GEN-7) + ГЕМОСТАТИЧЕСКИЙ БИНТ + ИНФУЗИОННЫЙ ПАКЕТ",
-    kitLocation: "ТРАВМАТОЛОГИЧЕСКИЙ ОТСЕК M-01 (СТОЙКА 2)",
+    kitName: "TOURNIQUET A-1 (C-A-T GEN-7) + HEMOSTATIC GAUZE + IV FLUID BAG",
+    kitLocation: "TRAUMA BAY M-01 (RACK 2)",
     instructions: [
-      "НАЛОЖИТЬ ТУРНИКЕТ A-1 ВЫШЕ ЗОНЫ КРОВОТЕЧЕНИЯ И ЗАТЯНУТЬ ВОРОТОК ДО ОСТАНОВКИ КРОВОТОКА",
-      "ЗАФИКСИРОВАТЬ СКОБУ ТУРНИКЕТА A-1, ЗАПИСАТЬ ВРЕМЯ НАЛОЖЕНИЯ (MET) И ТАМПОНИРОВАТЬ РАНУ",
-      "УСТАНОВИТЬ В/В КАТЕТЕР 18G И НАЧАТЬ БОЛЮСНУЮ ИНФУЗИЮ КРИСТАЛЛОИДОВ (500 МЛ)",
-      "ПОДТВЕРДИТЬ ПОДЪЕМ АД SYS >= 95 mmHg, ЧСС <= 110 BPM И ЗАПУСТИТЬ ПРОВЕРКУ HOLD TIME 30s",
+      "APPLY TOURNIQUET A-1 PROXIMAL TO BLEEDING SITE AND TIGHTEN WINDLASS UNTIL BLEEDING STOPS",
+      "SECURE TOURNIQUET A-1 CLIP, LOG APPLICATION TIME (MET), AND PACK WOUND",
+      "ESTABLISH 18G IV ACCESS AND BEGIN CRYSTALLOID BOLUS INFUSION (500 ML)",
+      "CONFIRM ABP SYS >= 95 mmHg, HR <= 110 BPM AND START 30s HOLD TIME CHECK",
     ],
-    holdCriteria: "ABP SYS >= 95 mmHg, HR <= 110 BPM, SHOCK INDEX < 0.90 В ТЕЧЕНИЕ 30.0 СЕКУНД",
+    holdCriteria: "ABP SYS >= 95 mmHg, HR <= 110 BPM, SHOCK INDEX < 0.90 FOR 30.0 SECONDS",
   },
   CO2_SPIKE: {
     code: "ALM-NEURO-03 // HYPERCAPNIA",
     faultZone: "HEAD",
     hevZone: "respiratory",
-    title: "ТОКСИЧЕСКАЯ ГИПЕРКАПНИЯ // ОТКАЗ СКРУББЕРА CO2 (> 6500 ppm)",
-    rootCause: "ЗАКЛИНИВАНИЕ КЛАПАНА ДЕСОРБЦИИ СКРУББЕРА CDRA BED-A -> НАКОПЛЕНИЕ CO2 И УГНЕТЕНИЕ ЦНС",
+    title: "TOXIC HYPERCAPNIA // CO2 SCRUBBER FAILURE (> 6500 ppm)",
+    rootCause: "CDRA BED-A DESORPTION VALVE JAM -> CO2 ACCUMULATION & CNS DEPRESSION",
     kitCode: "ECLSS-KIT [KIT ECLSS-03 / LiOH C-03]",
-    kitName: "АВАРИЙНЫЙ ПОГЛОТИТЕЛЬНЫЙ ПАТРОН LiOH C-03 + ИЗОЛИРУЮЩИЙ РЕСПИРАТОР PBA",
-    kitLocation: "ИНЖЕНЕРНЫЙ ОТСЕК ECLSS E-04 (ПАЛУБА B)",
+    kitName: "EMERGENCY LiOH C-03 SCRUBBER CARTRIDGE + CLOSED-LOOP PBA RESPIRATOR",
+    kitLocation: "ECLSS ENGINEERING BAY E-04 (DECK B)",
     instructions: [
-      "ПЕРЕВЕСТИ ЭКИПАЖ НА ИЗОЛИРУЮЩИЕ ДЫХАТЕЛЬНЫЕ АППАРАТЫ (PBA CLOSED-LOOP)",
-      "ВРУЧНУЮ ОТКРЫТЬ БАЙПАС РЕЗЕРВНОГО КОНТУРА ПОГЛОЩЕНИЯ CDRA BED-B [КЛАПАН V-204]",
-      "УСТАНОВИТЬ АВАРИЙНЫЙ КАРТРИДЖ LiOH C-03 В МАГИСТРАЛЬ ПРИНУДИТЕЛЬНОЙ ВЕНТИЛЯЦИИ",
-      "ПРОВЕРИТЬ СНИЖЕНИЕ CO2 < 3500 ppm, ВОССТАНОВЛЕНИЕ КОГНИТИВНОГО ИНДЕКСА И HOLD TIME 30s",
+      "TRANSITION CREW TO PORTABLE BREATHING APPARATUS (PBA CLOSED-LOOP)",
+      "MANUALLY OPEN CDRA BED-B BACKUP ABSORPTION LOOP BYPASS [VALVE V-204]",
+      "INSTALL EMERGENCY LiOH C-03 CARTRIDGE INTO FORCED VENTILATION DUCT",
+      "VERIFY CO2 DROP < 3500 ppm, COGNITIVE INDEX RECOVERY & HOLD TIME 30s",
     ],
-    holdCriteria: "CABIN CO2 <= 3500 ppm И COGNITIVE INDEX >= 90% В ТЕЧЕНИЕ 30.0 СЕКУНД",
+    holdCriteria: "CABIN CO2 <= 3500 ppm AND COGNITIVE INDEX >= 90% FOR 30.0 SECONDS",
   },
   SOLAR_FLARE: {
     code: "ALM-RAD-04 // SOLAR PARTICLE EVENT",
     faultZone: "HEAD",
     hevZone: "radiation",
-    title: "РАДИАЦИОННАЯ ТРЕВОГА SPE // СОЛНЕЧНАЯ ВСПЫШКА И ПРОТОННЫЙ ШТОРМ",
-    rootCause: "ВСПЫШКА X-КЛАССА (NASA DONKI SEP) -> ЭКСПОНЕНЦИАЛЬНЫЙ РОСТ МОЩНОСТИ ДОЗЫ (> 250 µGy/h)",
+    title: "SPE RADIATION ALERT // SOLAR FLARE & PROTON STORM",
+    rootCause: "X-CLASS FLARE (NASA DONKI SEP) -> EXPONENTIAL DOSE RATE SURGE (> 250 µGy/h)",
     kitCode: "RAD-KIT [STORM SHELTER R-01]",
-    kitName: "ПЕРСОНАЛЬНЫЙ ДОЗИМЕТР CPD + УКЛАДКА ЭКРАНИРОВАНИЯ ВОДЯНЫМИ БЛОКАМИ",
-    kitLocation: "РАДИАЦИОННОЕ УКРЫТИЕ STORM SHELTER (СЕКТОР С-01)",
+    kitName: "PERSONAL DOSIMETER CPD + WATER-WALL SHIELDING PACK",
+    kitLocation: "RADIATION STORM SHELTER (SECTOR C-01)",
     instructions: [
-      "НЕМЕДЛЕННО ПЕРЕМЕСТИТЬ ЭКИПАЖ В РАДИАЦИОННОЕ УКРЫТИЕ (STORM SHELTER) И ОТМЕНИТЬ ВЫХОД ВКД (EVA NO-GO)",
-      "УКРЕПИТЬ СТЕНКИ УКРЫТИЯ ВОДЯНЫМИ КОНТЕЙНЕРАМИ И ПОЛИЭТИЛЕНОВЫМИ БЛОКАМИ ЗАЩИТЫ",
-      "СВЕРЯТЬ ПОКАЗАНИЯ ПЕРСОНАЛЬНЫХ ДОЗИМЕТРОВ И НАКОПЛЕННУЮ ДОЗУ С ЛИМИТОМ МИССИИ",
-      "ОСТАВАТЬСЯ В УКРЫТИИ ДО СПАДА ПОТОКА ПРОТОНОВ И ВЕРИФИКАЦИИ HOLD TIME 30s",
+      "IMMEDIATELY RELOCATE CREW TO RADIATION STORM SHELTER AND ABORT EVA (EVA NO-GO)",
+      "REINFORCE SHELTER WALLS WITH WATER CONTAINERS AND POLYETHYLENE SHIELDING BLOCKS",
+      "CROSS-CHECK PERSONAL DOSIMETER READINGS AND CUMULATIVE DOSE AGAINST MISSION LIMIT",
+      "REMAIN IN SHELTER UNTIL PROTON FLUX SUBSIDES AND VERIFY HOLD TIME 30s",
     ],
-    holdCriteria: "DOSE RATE < 80 µGy/h И СТАБИЛИЗАЦИЯ ФОНА В ТЕЧЕНИЕ 30.0 СЕКУНД",
+    holdCriteria: "DOSE RATE < 80 µGy/h AND BACKGROUND STABILIZED FOR 30.0 SECONDS",
   },
   TACHYCARDIA: {
     code: "ALM-CARD-05 // TACHYCARDIA",
     faultZone: "HEART",
     hevZone: "cardiovascular",
-    title: "ПАРОКСИЗМАЛЬНАЯ ТАХИКАРДИЯ // ЧСС > 135 BPM В ПОКОЕ",
-    rootCause: "СИМПАТОАДРЕНАЛОВАЯ ПЕРЕГРУЗКА / НАРУШЕНИЕ РИТМА ПРИ НОРМАЛЬНОМ АРТЕРИАЛЬНОМ ДАВЛЕНИИ",
+    title: "PAROXYSMAL TACHYCARDIA // RESTING HR > 135 BPM",
+    rootCause: "SYMPATHOADRENAL OVERLOAD / ARRHYTHMIA WITH NORMAL ARTERIAL BLOOD PRESSURE",
     kitCode: "CARDIO-KIT [MED-PACK C-01]",
-    kitName: "12-КАНАЛЬНЫЙ ЭКГ МОНИТОР + ЭЛЕКТРОЛИТНЫЙ РАСТВОР + БЕТА-БЛОКАТОР ПО НАЗНАЧЕНИЮ",
-    kitLocation: "МЕДИЦИНСКАЯ СТОЙКА M-02",
+    kitName: "12-LEAD ECG MONITOR + ELECTROLYTE SOLUTION + PRESCRIBED BETA-BLOCKER",
+    kitLocation: "MEDICAL RACK M-02",
     instructions: [
-      "ПЕРЕВЕСТИ ЧЛЕНА ЭКИПАЖА В ПОЛОЖЕНИЕ ПОКОЯ И ПРЕКРАТИТЬ ФИЗИЧЕСКУЮ / ОПЕРАТОРСКУЮ НАГРУЗКУ",
-      "ВЫПОЛНИТЬ ВАГУСНЫЕ ПРОБЫ (ДЫХАТЕЛЬНЫЙ МАНЕВР) И СНЯТЬ 12-КАНАЛЬНУЮ ЭКГ",
-      "ПРОВЕСТИ ПЕРОРАЛЬНУЮ РЕГИДРАТАЦИЮ ЭЛЕКТРОЛИТНЫМ РАСТВОРОМ (500 МЛ)",
-      "КОНТРОЛИРОВАТЬ СНИЖЕНИЕ ЧСС <= 110 BPM И ВЫПОЛНИТЬ 30-СЕКУНДНУЮ ВЕРИФИКАЦИЮ",
+      "PLACE CREWMEMBER AT REST AND CEASE ALL PHYSICAL / OPERATOR EXERTION",
+      "PERFORM VAGAL MANEUVERS (BREATHING MANEUVER) AND RECORD 12-LEAD ECG",
+      "ADMINISTER ORAL REHYDRATION WITH ELECTROLYTE SOLUTION (500 ML)",
+      "MONITOR HR REDUCTION <= 110 BPM AND COMPLETE 30-SECOND VERIFICATION",
     ],
-    holdCriteria: "HR <= 110 BPM И HRV RMSSD >= 30 ms В ТЕЧЕНИЕ 30.0 СЕКУНД",
+    holdCriteria: "HR <= 110 BPM AND HRV RMSSD >= 30 ms FOR 30.0 SECONDS",
   },
   SENSOR_FAILURE: {
     code: "ALM-SYS-06 // SENSOR FAULT",
     faultZone: "HEART",
     hevZone: "cardiovascular",
-    title: "ОТКАЗ ДАТЧИКА БИОМЕТРИИ // ПОТЕРЯ ДОСТОВЕРНОСТИ ТЕЛЕМЕТРИИ",
-    rootCause: "ОБРЫВ КОНТАКТА НАГРУДНОГО БИОСЕНСОРА CM-1 -> СТАТУС SENSOR_FAULT (ДАННЫЕ НЕ СЧИТАЮТСЯ НОРМОЙ)",
+    title: "BIOMETRIC SENSOR FAULT // TELEMETRY INTEGRITY LOSS",
+    rootCause: "CHEST BIOSENSOR CM-1 CONTACT LOSS -> SENSOR_FAULT STATUS (DATA NOT TREATED AS NOMINAL)",
     kitCode: "DIAG-KIT [BIO-HARNESS S-02]",
-    kitName: "РЕЗЕРВНЫЙ БИОМЕТРИЧЕСКИЙ ПОЯС + КОНТАКТНЫЙ ГЕЛЬ + КАБЕЛЬ ТЕЛЕМЕТРИИ",
-    kitLocation: "ТЕХНИЧЕСКИЙ ШКАФ СКАФАНДРОВ S-02",
+    kitName: "BACKUP BIOMETRIC HARNESS + CONDUCTIVE GEL + TELEMETRY CABLE",
+    kitLocation: "SUIT TECHNICAL LOCKER S-02",
     instructions: [
-      "ПРОВЕРИТЬ РАЗЪЕМ ТЕЛЕМЕТРИЙНОГО КАБЕЛЯ И ПЛОТНОСТЬ ПРИЛЕГАНИЯ ЭЛЕКТРОДОВ БИОПОЯСА",
-      "ВЫПОЛНИТЬ РУЧНОЙ ЗАМЕР ПУЛЬСА И SpO2 РЕЗЕРВНЫМ НАПАЛЬЧНЫМ ПУЛЬСОКСИМЕТРОМ",
-      "ПЕРЕКЛЮЧИТЬ КАНАЛ БИОСЕНСОРА НА РЕЗЕРВНЫЙ ТРАКТ B ИЛИ ЗАМЕНИТЬ ДАТЧИК",
-      "УБЕДИТЬСЯ В ПОСТУПЛЕНИИ ДОСТОВЕРНЫХ ПАКЕТОВ (QUALITY: GOOD) В ТЕЧЕНИЕ 30.0 СЕКУНД",
+      "INSPECT TELEMETRY CABLE CONNECTOR AND BIO-HARNESS ELECTRODE CONTACT",
+      "PERFORM MANUAL PULSE AND SpO2 CHECK WITH BACKUP FINGERTIP PULSE OXIMETER",
+      "SWITCH BIOSENSOR CHANNEL TO BACKUP PATH B OR REPLACE SENSOR UNIT",
+      "CONFIRM VALID TELEMETRY PACKETS (QUALITY: GOOD) SUSTAINED FOR 30.0 SECONDS",
     ],
-    holdCriteria: "СТАТУС КАНАЛА = OK (QUALITY: GOOD) В ТЕЧЕНИЕ 30.0 СЕКУНД",
+    holdCriteria: "CHANNEL STATUS = OK (QUALITY: GOOD) FOR 30.0 SECONDS",
   },
 };
 
 const TELEMETRY_TABLE_ROWS: TelemetryRowSpec[] = [
-  // HEART // СЕРДЦЕ И ГЕМОДИНАМИКА
+  // HEART // HEART & HEMODYNAMICS
   {
     id: "hr",
     paramId: "heart_rate",
     zone: "HEART",
-    systemLabel: "CARDIO // СЕРДЦЕ",
-    paramLabel: "HEART RATE (ЧАСТОТА ПУЛЬСА)",
+    systemLabel: "CARDIO // HEART",
+    paramLabel: "HEART RATE (BPM)",
     getValue: (t) => `${String(Math.round(t.hr)).padStart(3, "0")} BPM`,
     normLabel: "050 .. 110 BPM",
     evaluate: (t) => (t.hr > 125 || t.hr < 45 ? "CRITICAL" : t.hr > 110 || t.hr < 50 ? "CAUTION" : "NOMINAL"),
@@ -275,8 +275,8 @@ const TELEMETRY_TABLE_ROWS: TelemetryRowSpec[] = [
     id: "abp",
     paramId: "bp_systolic",
     zone: "HEART",
-    systemLabel: "CARDIO // СЕРДЦЕ",
-    paramLabel: "ARTERIAL BP (АРТЕРИАЛЬНОЕ ДАВЛЕНИЕ)",
+    systemLabel: "CARDIO // HEART",
+    paramLabel: "ARTERIAL BP (BLOOD PRESSURE)",
     getValue: (t) => `${String(Math.round(t.abpSys)).padStart(3, "0")}/${String(Math.round(t.abpDia)).padStart(2, "0")} mmHg`,
     normLabel: "095/60 .. 135/88 mmHg",
     evaluate: (t) => (t.abpSys < 85 || t.abpSys > 155 ? "CRITICAL" : t.abpSys < 95 || t.abpSys > 135 ? "CAUTION" : "NOMINAL"),
@@ -284,8 +284,8 @@ const TELEMETRY_TABLE_ROWS: TelemetryRowSpec[] = [
   {
     id: "map",
     zone: "HEART",
-    systemLabel: "CARDIO // СЕРДЦЕ",
-    paramLabel: "MEAN ARTERIAL PRESS (СРЕДНЕЕ АД MAP)",
+    systemLabel: "CARDIO // HEART",
+    paramLabel: "MEAN ARTERIAL PRESS (MAP)",
     getValue: (t) => `${String(Math.round(t.abpMap)).padStart(3, "0")} mmHg`,
     normLabel: "070 .. 105 mmHg",
     evaluate: (t) => (t.abpMap < 62 ? "CRITICAL" : t.abpMap < 70 || t.abpMap > 105 ? "CAUTION" : "NOMINAL"),
@@ -293,8 +293,8 @@ const TELEMETRY_TABLE_ROWS: TelemetryRowSpec[] = [
   {
     id: "si",
     zone: "HEART",
-    systemLabel: "CARDIO // СЕРДЦЕ",
-    paramLabel: "SHOCK INDEX (ШОКОВЫЙ ИНДЕКС ЧСС/АД)",
+    systemLabel: "CARDIO // HEART",
+    paramLabel: "SHOCK INDEX (HR/SBP RATIO)",
     getValue: (t) => `${t.shockIndex.toFixed(2)} RATIO`,
     normLabel: "0.45 .. 0.85 RATIO",
     evaluate: (t) => (t.shockIndex >= 1.2 ? "CRITICAL" : t.shockIndex > 0.85 ? "CAUTION" : "NOMINAL"),
@@ -302,20 +302,20 @@ const TELEMETRY_TABLE_ROWS: TelemetryRowSpec[] = [
   {
     id: "co",
     zone: "HEART",
-    systemLabel: "CARDIO // СЕРДЦЕ",
-    paramLabel: "CARDIAC OUTPUT (СЕРДЕЧНЫЙ ВЫБРОС)",
+    systemLabel: "CARDIO // HEART",
+    paramLabel: "CARDIAC OUTPUT (CO)",
     getValue: (t) => `${t.cardiacOutput.toFixed(1)} L/min`,
     normLabel: "4.2 .. 6.5 L/min",
     evaluate: (t) => (t.cardiacOutput < 3.4 ? "CRITICAL" : t.cardiacOutput < 4.2 ? "CAUTION" : "NOMINAL"),
   },
 
-  // LUNGS // ЛЕГКИЕ И ГАЗООБМЕН
+  // LUNGS // LUNGS & GAS EXCHANGE
   {
     id: "spo2",
     paramId: "spo2",
     zone: "LUNGS",
-    systemLabel: "RESP // ЛЕГКИЕ",
-    paramLabel: "ARTERIAL SpO2 (САТУРАЦИЯ КИСЛОРОДА)",
+    systemLabel: "RESP // LUNGS",
+    paramLabel: "ARTERIAL SpO2 (O2 SATURATION)",
     getValue: (t) => `${t.spo2.toFixed(1)} %`,
     normLabel: "94.0 .. 100.0 %",
     evaluate: (t) => (t.spo2 < 85.0 ? "CRITICAL" : t.spo2 < 94.0 ? "CAUTION" : "NOMINAL"),
@@ -323,8 +323,8 @@ const TELEMETRY_TABLE_ROWS: TelemetryRowSpec[] = [
   {
     id: "pao2",
     zone: "LUNGS",
-    systemLabel: "RESP // ЛЕГКИЕ",
-    paramLabel: "ALVEOLAR PaO2 (ПАРЦИАЛЬНОЕ ДАВЛ. O2)",
+    systemLabel: "RESP // LUNGS",
+    paramLabel: "ALVEOLAR PaO2 (O2 PARTIAL PRESS.)",
     getValue: (t) => `${String(Math.round(t.pao2)).padStart(3, "0")} mmHg`,
     normLabel: "080 .. 105 mmHg",
     evaluate: (t) => (t.pao2 < 58 ? "CRITICAL" : t.pao2 < 80 ? "CAUTION" : "NOMINAL"),
@@ -333,8 +333,8 @@ const TELEMETRY_TABLE_ROWS: TelemetryRowSpec[] = [
     id: "rr",
     paramId: "resp_rate",
     zone: "LUNGS",
-    systemLabel: "RESP // ЛЕГКИЕ",
-    paramLabel: "RESPIRATION RATE (ЧАСТОТА ДЫХАНИЯ)",
+    systemLabel: "RESP // LUNGS",
+    paramLabel: "RESPIRATION RATE (BREATHS/MIN)",
     getValue: (t) => `${String(Math.round(t.respRate)).padStart(2, "0")} rpm`,
     normLabel: "10 .. 20 rpm",
     evaluate: (t) => (t.respRate > 24 || t.respRate < 8 ? "CRITICAL" : t.respRate > 20 ? "CAUTION" : "NOMINAL"),
@@ -342,8 +342,8 @@ const TELEMETRY_TABLE_ROWS: TelemetryRowSpec[] = [
   {
     id: "etco2",
     zone: "LUNGS",
-    systemLabel: "RESP // ЛЕГКИЕ",
-    paramLabel: "END-TIDAL CO2 (КАПНОМЕТРИЯ EtCO2)",
+    systemLabel: "RESP // LUNGS",
+    paramLabel: "END-TIDAL CO2 (CAPNOGRAPHY EtCO2)",
     getValue: (t) => `${String(Math.round(t.etCo2)).padStart(2, "0")} mmHg`,
     normLabel: "35 .. 45 mmHg",
     evaluate: (t) => (t.etCo2 > 52 || t.etCo2 < 28 ? "CRITICAL" : t.etCo2 > 45 || t.etCo2 < 35 ? "CAUTION" : "NOMINAL"),
@@ -352,19 +352,19 @@ const TELEMETRY_TABLE_ROWS: TelemetryRowSpec[] = [
     id: "suito2",
     paramId: "cabin_o2",
     zone: "LUNGS",
-    systemLabel: "RESP // ЛЕГКИЕ",
-    paramLabel: "LOOP / CABIN O2 (ДАВЛЕНИЕ O2 КОНТУРА)",
+    systemLabel: "RESP // LUNGS",
+    paramLabel: "LOOP / CABIN O2 (LOOP O2 PRESSURE)",
     getValue: (t) => `${t.suitO2Kpa.toFixed(1)} kPa`,
     normLabel: "20.0 .. 22.5 kPa",
     evaluate: (t) => (t.suitO2Kpa < 15.5 ? "CRITICAL" : t.suitO2Kpa < 20.0 ? "CAUTION" : "NOMINAL"),
   },
 
-  // HEAD // ГОЛОВА, ЦНС, РАДИАЦИЯ И СРЕДА
+  // HEAD // HEAD, CNS, RADIATION & ENVIRONMENT
   {
     id: "cog",
     zone: "HEAD",
-    systemLabel: "NEURO // ГОЛОВА",
-    paramLabel: "COGNITIVE INDEX (КОГНИТИВНЫЙ ИНДЕКС)",
+    systemLabel: "NEURO // HEAD",
+    paramLabel: "COGNITIVE INDEX",
     getValue: (t) => `${String(Math.round(t.cogIndex)).padStart(2, "0")} %`,
     normLabel: "90 .. 100 %",
     evaluate: (t) => (t.cogIndex < 70 ? "CRITICAL" : t.cogIndex < 90 ? "CAUTION" : "NOMINAL"),
@@ -372,8 +372,8 @@ const TELEMETRY_TABLE_ROWS: TelemetryRowSpec[] = [
   {
     id: "cnso2",
     zone: "HEAD",
-    systemLabel: "NEURO // ГОЛОВА",
-    paramLabel: "CEREBRAL rSO2 (ОКСИГЕНАЦИЯ МОЗГА ЦНС)",
+    systemLabel: "NEURO // HEAD",
+    paramLabel: "CEREBRAL rSO2 (BRAIN OXYGENATION)",
     getValue: (t) => `${t.cnsO2Sat.toFixed(1)} %`,
     normLabel: "65.0 .. 80.0 %",
     evaluate: (t) => (t.cnsO2Sat < 55.0 ? "CRITICAL" : t.cnsO2Sat < 65.0 ? "CAUTION" : "NOMINAL"),
@@ -382,8 +382,8 @@ const TELEMETRY_TABLE_ROWS: TelemetryRowSpec[] = [
     id: "pvt",
     paramId: "pvt_mean_rt",
     zone: "HEAD",
-    systemLabel: "NEURO // ГОЛОВА",
-    paramLabel: "PVT REACTION TIME (ЗАДЕРЖКА РЕАКЦИИ)",
+    systemLabel: "NEURO // HEAD",
+    paramLabel: "PVT REACTION TIME (LATENCY)",
     getValue: (t) => `${String(Math.round(t.pvtRt)).padStart(3, "0")} ms`,
     normLabel: "200 .. 280 ms",
     evaluate: (t) => (t.pvtRt > 380 ? "CRITICAL" : t.pvtRt > 280 ? "CAUTION" : "NOMINAL"),
@@ -392,8 +392,8 @@ const TELEMETRY_TABLE_ROWS: TelemetryRowSpec[] = [
     id: "co2cabin",
     paramId: "cabin_co2",
     zone: "HEAD",
-    systemLabel: "ECLSS // КАБИНА",
-    paramLabel: "CABIN CO2 (КОНЦЕНТРАЦИЯ CO2 В КАБИНЕ)",
+    systemLabel: "ECLSS // CABIN",
+    paramLabel: "CABIN CO2 (CONCENTRATION)",
     getValue: (t) => `${String(Math.round(t.cabinCo2Ppm)).padStart(4, "0")} ppm`,
     normLabel: "0400 .. 3500 ppm",
     evaluate: (t) => (t.cabinCo2Ppm > 5000 ? "CRITICAL" : t.cabinCo2Ppm > 3500 ? "CAUTION" : "NOMINAL"),
@@ -402,8 +402,8 @@ const TELEMETRY_TABLE_ROWS: TelemetryRowSpec[] = [
     id: "doserate",
     paramId: "dose_rate",
     zone: "HEAD",
-    systemLabel: "RAD // РАДИАЦИЯ",
-    paramLabel: "RADIATION DOSE RATE (МОЩНОСТЬ ДОЗЫ)",
+    systemLabel: "RAD // RADIATION",
+    paramLabel: "RADIATION DOSE RATE",
     getValue: (t) => `${t.doseRateUgy.toFixed(1)} µGy/h`,
     normLabel: "10.0 .. 80.0 µGy/h",
     evaluate: (t) => (t.doseRateUgy > 200 ? "CRITICAL" : t.doseRateUgy > 80 ? "CAUTION" : "NOMINAL"),
@@ -551,7 +551,7 @@ const HumanWireframeSvg: React.FC<HumanWireframeSvgProps> = ({
         />
       </g>
 
-      {/* INTERACTIVE ZONE 1: HEAD // ГОЛОВА И ЦНС */}
+      {/* INTERACTIVE ZONE 1: HEAD // HEAD & CNS */}
       <g
         data-testid="svg-zone-head"
         onClick={() => onSelectZone("HEAD")}
@@ -594,7 +594,7 @@ const HumanWireframeSvg: React.FC<HumanWireframeSvgProps> = ({
           strokeWidth={selectedZone === "HEAD" || headCritical ? "2" : "1"}
         />
         <text x="20" y="48" fill={getZoneStroke("HEAD", headCritical)} fontSize="10" fontWeight="bold" fontFamily="monospace">
-          [01] ГОЛОВА // HEAD
+          [01] HEAD // NEURO
         </text>
         <text x="20" y="61" fill="#cccccc" fontSize="9.5" fontFamily="monospace">
           COG: {Math.round(telemetry.cogIndex)}% | rSO2: {telemetry.cnsO2Sat.toFixed(0)}%
@@ -604,7 +604,7 @@ const HumanWireframeSvg: React.FC<HumanWireframeSvgProps> = ({
         </text>
       </g>
 
-      {/* INTERACTIVE ZONE 2: LUNGS // ЛЕГКИЕ И ДЫХАНИЕ */}
+      {/* INTERACTIVE ZONE 2: LUNGS // LUNGS & RESPIRATION */}
       <g
         data-testid="svg-zone-lungs"
         onClick={() => onSelectZone("LUNGS")}
@@ -652,7 +652,7 @@ const HumanWireframeSvg: React.FC<HumanWireframeSvgProps> = ({
           strokeWidth={selectedZone === "LUNGS" || lungsCritical ? "2" : "1"}
         />
         <text x="410" y="146" fill={getZoneStroke("LUNGS", lungsCritical)} fontSize="10" fontWeight="bold" fontFamily="monospace">
-          [02] ЛЕГКИЕ // LUNGS
+          [02] LUNGS // RESP
         </text>
         <text
           x="410"
@@ -669,7 +669,7 @@ const HumanWireframeSvg: React.FC<HumanWireframeSvgProps> = ({
         </text>
       </g>
 
-      {/* INTERACTIVE ZONE 3: HEART // СЕРДЦЕ И СОСУДЫ */}
+      {/* INTERACTIVE ZONE 3: HEART // HEART & VASCULAR */}
       <g
         data-testid="svg-zone-heart"
         onClick={() => onSelectZone("HEART")}
@@ -710,7 +710,7 @@ const HumanWireframeSvg: React.FC<HumanWireframeSvgProps> = ({
           strokeWidth={selectedZone === "HEART" || heartCritical ? "2" : "1"}
         />
         <text x="20" y="194" fill={getZoneStroke("HEART", heartCritical)} fontSize="10" fontWeight="bold" fontFamily="monospace">
-          [03] СЕРДЦЕ // HEART
+          [03] HEART // CARDIO
         </text>
         <text
           x="20"
@@ -1035,11 +1035,26 @@ export function ActionCentricHud() {
   // Determine if we are in an Emergency / Recovery state (either via local CAD trigger or backend Alert)
   const hasBackendCriticalAlert =
     focusBackendAlert && (focusBackendAlert.severity === "WARNING" || focusBackendAlert.severity === "CAUTION");
+  const backendAlertFault: FaultMode =
+    focusBackendAlert?.kind === "SENSOR_FAULT" || focusBackendAlert?.kind === "DATA_STALE"
+      ? "SENSOR_FAILURE"
+      : focusBackendAlert?.parameter === "cabin_co2"
+      ? "CO2_SPIKE"
+      : focusBackendAlert?.parameter === "bp_systolic"
+      ? "HEMORRHAGE"
+      : focusBackendAlert?.parameter === "heart_rate"
+      ? "TACHYCARDIA"
+      : focusBackendAlert?.parameter === "dose_rate"
+      ? "SOLAR_FLARE"
+      : "HYPOXIA";
+  const scenarioFault = SCENARIO_TO_FAULT[backendScenario] ?? "NOMINAL";
   const effectiveFault: FaultMode =
     fault !== "NOMINAL"
       ? fault
       : hasBackendCriticalAlert
-      ? SCENARIO_TO_FAULT[backendScenario] ?? "HYPOXIA"
+      ? scenarioFault !== "NOMINAL"
+        ? scenarioFault
+        : backendAlertFault
       : "NOMINAL";
   const effectivePhase: SystemPhase =
     phase !== "NOMINAL"
@@ -1163,7 +1178,7 @@ export function ActionCentricHud() {
   const cfmsEnabled = !!fitness?.enabled;
   const monitoredCrewId = state?.mission.monitored_crew_id ?? "CM-1";
   const shownCrewId = viewCrew ?? monitoredCrewId;
-  const isUnmonitoredCrew = shownCrewId !== monitoredCrewId && shownCrewId !== "CM-2";
+  const isUnmonitoredCrew = shownCrewId !== monitoredCrewId;
 
   const counts = { WARNING: 0, CAUTION: 0, ADVISORY: 0 };
   backendAlerts.forEach((a) => (counts[a.severity] += 1));
@@ -1348,7 +1363,7 @@ export function ActionCentricHud() {
                 <Chip className="border-[#00c8ff] bg-[#001824] text-[#00c8ff]">OPEN [3]</Chip>
               </div>
               <div className="mt-0.5 truncate hmi-mono text-[16px] font-black tracking-[0.06em] text-[#00c8ff]">
-                {targetSession ? `${targetSession.crew_id} · ${targetSession.exercise_type}` : "NO SESSION"}
+                {targetSession ? `${targetSession.crew_id} ${targetSession.exercise_type}` : "NO SESSION"}
               </div>
               <div className="mt-0.5 truncate hmi-mono text-[10.5px] text-[#cccccc]">
                 {liveEx && liveEx.profile
@@ -1432,7 +1447,7 @@ export function ActionCentricHud() {
           <div className="flex min-h-0 flex-col bg-black overflow-y-auto hev-scroll">
             {isEmergencyLayout && activeProto ? (
               /* ===============================================================
-                 EMERGENCY ACTION PANEL (МАССИВНАЯ КРАСНАЯ/ЯНТАРНАЯ ПАНЕЛЬ)
+                 EMERGENCY ACTION PANEL
                  =============================================================== */
               <div
                 data-testid="emergency-panel"
@@ -1453,8 +1468,8 @@ export function ActionCentricHud() {
                       <div className="flex items-center gap-2 hmi-mono text-[10.5px] font-black tracking-[0.12em]">
                         <span>
                           {effectivePhase === "EMERGENCY"
-                            ? "EMERGENCY ACTION DIRECTIVE // IMMEDIATE INTERVENTION"
-                            : "RECOVERY VERIFICATION // HOLD TIME 30.0s ACTIVE"}
+                            ? "MASTER WARNING // EMERGENCY ACTION DIRECTIVE // IMMEDIATE INTERVENTION"
+                            : "MASTER CAUTION // RECOVERY VERIFICATION // HOLD TIME 30.0s ACTIVE"}
                         </span>
                         {focusBackendAlert && (
                           <span>
@@ -1500,7 +1515,9 @@ export function ActionCentricHud() {
                       </button>
                       <button
                         type="button"
-                        onClick={() => setShowTwinInEmergency(true)}
+                        onClick={() => {
+                          setTwinMode((m) => (m === "ANATOMICAL" ? "CAD" : "ANATOMICAL"));
+                        }}
                         className="border-2 border-black bg-black px-2.5 py-1 hmi-mono text-[11px] font-black text-white hover:bg-[#1a1a1a]"
                       >
                         SHOW TWIN
@@ -1533,10 +1550,10 @@ export function ActionCentricHud() {
                     </div>
                   )}
 
-                  {/* BLOCK 1: ПЕРВОПРИЧИНА (ROOT CAUSE & R.I.D.G.E. CORRELATION) */}
+                  {/* BLOCK 1: ROOT CAUSE & R.I.D.G.E. CORRELATION */}
                   <div className="border-b border-[#333333] bg-black px-4 py-2">
                     <div className="hmi-mono text-[10px] font-bold tracking-[0.1em] text-[#ff0000]">
-                      01 // ПЕРВОПРИЧИНА ОТКАЗА & R.I.D.G.E. CORRELATION (ROOT CAUSE):
+                      01 // ROOT CAUSE & R.I.D.G.E. CORRELATION:
                     </div>
                     <div className="mt-0.5 hmi-mono text-[12.5px] font-bold text-white">
                       {activeProto.rootCause}
@@ -1548,7 +1565,7 @@ export function ActionCentricHud() {
                     )}
                   </div>
 
-                  {/* BLOCK 2: ТРЕБУЕМЫЙ МЕДКОМПЛЕКТ (MEDICAL KIT) */}
+                  {/* BLOCK 2: REQUIRED MEDICAL KIT */}
                   <div
                     className={`border-b-2 border-black px-4 py-2 ${
                       effectivePhase === "EMERGENCY" ? "bg-[#ff0000] text-black" : "bg-[#ffb000] text-black"
@@ -1556,7 +1573,7 @@ export function ActionCentricHud() {
                   >
                     <div className="flex items-center justify-between">
                       <span data-testid="emergency-kit" className="hmi-mono text-[11px] font-black tracking-[0.1em]">
-                        02 // REQUIRED KIT: {backendProto?.kit ?? activeProto.kitCode}
+                        02 // REQUIRED KIT: <span data-testid="cm-kit">{backendProto?.kit ?? activeProto.kitCode}</span>
                       </span>
                       <span className="bg-black px-2 py-0.5 hmi-mono text-[10px] font-bold text-[#ffb000]">
                         {activeProto.kitLocation}
@@ -1572,11 +1589,11 @@ export function ActionCentricHud() {
                     ) : null}
                   </div>
 
-                  {/* BLOCK 3: ИНСТРУКЦИЯ (MANDATORY CHECKLIST STEPS) */}
+                  {/* BLOCK 3: MANDATORY CHECKLIST STEPS */}
                   <div className="border-b border-[#333333] bg-black px-4 py-2">
                     <div className="mb-1.5 flex items-center justify-between">
                       <span className="hmi-mono text-[10px] font-bold tracking-[0.1em] text-[#cccccc]">
-                        03 // ПРОТОКОЛ ДЕЙСТВИЙ (CLICK TO CONFIRM · SYNCED WITH HEV-1):
+                        03 // ACTION PROTOCOL (CLICK TO CONFIRM · SYNCED WITH HEV-1):
                       </span>
                       <span className="hmi-mono text-[10px] font-bold text-[#00ff00]">
                         CONFIRMED: {stepsDone.filter(Boolean).length}/{activeProto.instructions.length}
@@ -1619,7 +1636,7 @@ export function ActionCentricHud() {
                   </div>
                 </div>
 
-                {/* BLOCK 4: ТАЙМЕР УДЕРЖАНИЯ (HOLD TIME 30s VERIFICATION) & TWO-STEP CLEAR */}
+                {/* BLOCK 4: HOLD TIME 30s VERIFICATION & TWO-STEP CLEAR */}
                 <div className="border-t-2 border-[#333333] bg-[#080808] px-4 py-2.5">
                   <div className="flex items-center justify-between gap-2">
                     <div className="min-w-0 flex-1">
@@ -1634,7 +1651,7 @@ export function ActionCentricHud() {
                           : "04 // HOLD 30 s STARTS WHEN VALUES RETURN WITHIN LIMITS"}
                       </div>
                       <div className="truncate hmi-mono text-[10px] text-[#999999]">
-                        КРИТЕРИЙ: {activeProto.holdCriteria}
+                        CRITERIA: {activeProto.holdCriteria}
                       </div>
                     </div>
 
@@ -1713,6 +1730,15 @@ export function ActionCentricHud() {
                     })}
                   </div>
                 </div>
+
+                {/* DIMMED HEV-1 CORE TELEMETRY STRIP IN EMERGENCY MODE */}
+                <div data-testid="hud-vitals" className="border-t border-[#333333] bg-[#060606] p-2">
+                  <div data-testid="hud-cabin" className="grid grid-cols-5 gap-1.5">
+                    {allParams.map((p) => (
+                      <MetricCard key={p.id} p={p} emergency={true} />
+                    ))}
+                  </div>
+                </div>
               </div>
             ) : isUnmonitoredCrew ? (
               <div
@@ -1781,7 +1807,7 @@ export function ActionCentricHud() {
                     >
                       <div className="flex items-center justify-between border-b border-[#222222] pb-1">
                         <span className="hmi-sans text-[10.5px] font-bold tracking-[0.08em] text-white">
-                          [01] ГОЛОВА // CNS & NEUROLOGICAL SUBSYSTEM
+                          [01] HEAD // CNS & NEUROLOGICAL SUBSYSTEM
                         </span>
                         <span className="hmi-mono text-[10px] font-bold text-[#00ff00]">NOMINAL</span>
                       </div>
@@ -1816,7 +1842,7 @@ export function ActionCentricHud() {
                     >
                       <div className="flex items-center justify-between border-b border-[#222222] pb-1">
                         <span className="hmi-sans text-[10.5px] font-bold tracking-[0.08em] text-white">
-                          [02] ЛЕГКИЕ // RESPIRATORY & OXYGENATION
+                          [02] LUNGS // RESPIRATORY & OXYGENATION
                         </span>
                         <span className="hmi-mono text-[10px] font-bold text-[#00ff00]">NOMINAL</span>
                       </div>
@@ -1851,7 +1877,7 @@ export function ActionCentricHud() {
                     >
                       <div className="flex items-center justify-between border-b border-[#222222] pb-1">
                         <span className="hmi-sans text-[10.5px] font-bold tracking-[0.08em] text-white">
-                          [03] СЕРДЦЕ // CARDIOVASCULAR & HEMODYNAMICS
+                          [03] HEART // CARDIOVASCULAR & HEMODYNAMICS
                         </span>
                         <span className="hmi-mono text-[10px] font-bold text-[#00ff00]">NOMINAL</span>
                       </div>
@@ -2159,6 +2185,103 @@ export function ActionCentricHud() {
                 <span className="text-right text-[#ffb000]">{displayHoldRemaining.toFixed(1)}s</span>
               </div>
             </div>
+
+            {/* 05 // KSP 1 LIVE TELEMETRY BRIDGE */}
+            <div data-testid="ksp-bridge-panel" className="border-t border-[#333333] p-2.5 hmi-mono text-[9.5px]">
+              <div className="mb-1 flex items-center justify-between font-bold text-[#aaaaaa]">
+                <span>05 // KSP 1 TELEMETRY BRIDGE</span>
+                <span
+                  data-testid="ksp-link-badge"
+                  className={`px-1.5 py-0.5 text-[8.5px] font-black ${
+                    state?.ksp?.connected
+                      ? "bg-[#00ff00] text-black"
+                      : "border border-[#ffb000] bg-[#1a1100] text-[#ffb000]"
+                  }`}
+                >
+                  {state?.ksp?.connected ? "KSP ONLINE (1Hz)" : "KSP STANDBY"}
+                </span>
+              </div>
+              <div className="border border-[#333333] bg-[#101010] p-2">
+                {state?.ksp?.connected ? (
+                  <div className="flex flex-col gap-1">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[#777777]">VESSEL:</span>
+                      <span className="truncate font-bold text-[#00ff00]">{state.ksp.vessel_name}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-[#777777]">SITUATION:</span>
+                      <span className="text-white">
+                        {state.ksp.situation} @ {state.ksp.body}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-[#777777]">G-LOAD / ALT:</span>
+                      <span className="text-[#00c8ff]">
+                        {state.ksp.g_force.toFixed(2)}G · {(state.ksp.altitude_m / 1000).toFixed(1)}km
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-[#777777]">FLIGHT PHASE:</span>
+                      <span
+                        className={`font-bold ${
+                          state.ksp.hazard_phase && state.ksp.hazard_phase !== "NOMINAL_PAD"
+                            ? "text-[#ff0000]"
+                            : "text-[#00ff00]"
+                        }`}
+                      >
+                        {state.ksp.hazard_phase ?? "NOMINAL_PAD"}
+                      </span>
+                    </div>
+                    {state.ksp.hazard_label && state.ksp.hazard_phase !== "NOMINAL_PAD" && (
+                      <div className="border border-[#ff0000] bg-[#260000] px-1.5 py-0.5 text-[8.5px] font-bold text-[#ffb000]">
+                        {state.ksp.hazard_label}
+                      </div>
+                    )}
+                    <div className="flex items-center justify-between">
+                      <span className="text-[#777777]">KERBAL STATE:</span>
+                      <span
+                        className={`font-bold ${
+                          state.ksp.consciousness === "Unconscious"
+                            ? "text-[#ff0000]"
+                            : state.ksp.consciousness === "CognitivelyImpaired"
+                            ? "text-[#ffb000]"
+                            : "text-[#00ff00]"
+                        }`}
+                      >
+                        {state.ksp.emotion.toUpperCase()} / {state.ksp.consciousness.toUpperCase()}
+                      </span>
+                    </div>
+                    {state.ksp.crew.length > 0 && (
+                      <div className="mt-1 border-t border-[#262626] pt-1">
+                        {state.ksp.crew.map((c) => (
+                          <div key={c.name} className="flex items-center justify-between text-[8.5px]">
+                            <span className="truncate text-[#cccccc]">{c.name}</span>
+                            <span
+                              className={`font-bold ${
+                                c.inactive
+                                  ? "text-[#ff0000]"
+                                  : c.type === "Tourist"
+                                  ? "text-[#ffb000]"
+                                  : "text-[#00ff00]"
+                              }`}
+                            >
+                              {c.state_label}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="text-[8.5px] leading-snug text-[#888888]">
+                    <div>DLL: GameData/OrionMedKSP/Plugins/OrionMedKSP.dll</div>
+                    <div className="mt-0.5 text-[#aaaaaa]">
+                      Launch KSP 1 Flight Scene to stream live Kerbal biometrics & G-load at 1 Hz.
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
 
           <div className="border-t border-[#333333] bg-[#121212] px-3 py-1.5 hmi-mono text-[8.5px] text-[#777777]">
@@ -2262,12 +2385,12 @@ export function ActionCentricHud() {
           <table className="w-full border-collapse hmi-mono text-[11px]">
             <thead className="sticky top-0 bg-[#141414] text-left text-[10px] text-[#999999]">
               <tr className="border-b border-[#333333]">
-                <th className="border-r border-[#333333] px-3 py-1.5 w-[170px]">СИСТЕМА</th>
-                <th className="border-r border-[#333333] px-3 py-1.5">ПАРАМЕТР</th>
-                <th className="border-r border-[#333333] px-3 py-1.5 w-[180px]">ТЕКУЩЕЕ ЗНАЧЕНИЕ</th>
-                <th className="border-r border-[#333333] px-3 py-1.5 w-[180px]">НОРМА</th>
-                <th className="border-r border-[#333333] px-3 py-1.5 w-[110px]">ИСТОЧНИК</th>
-                <th className="px-3 py-1.5 w-[160px]">СТАТУС</th>
+                <th className="border-r border-[#333333] px-3 py-1.5 w-[170px]">SYSTEM</th>
+                <th className="border-r border-[#333333] px-3 py-1.5">PARAMETER</th>
+                <th className="border-r border-[#333333] px-3 py-1.5 w-[180px]">CURRENT VALUE</th>
+                <th className="border-r border-[#333333] px-3 py-1.5 w-[180px]">NOMINAL RANGE</th>
+                <th className="border-r border-[#333333] px-3 py-1.5 w-[110px]">SOURCE</th>
+                <th className="px-3 py-1.5 w-[160px]">STATUS</th>
               </tr>
             </thead>
             <tbody>

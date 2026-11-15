@@ -1,18 +1,17 @@
 # ORION-MED // HEV-1
-**Human Emergency and Vital Monitoring System** | *YOUR LIFE. OUR PRIORITY.*
+**Human Emergency and Vital Monitoring System** — *YOUR LIFE. OUR PRIORITY.*
 
 An offline-first, deterministic medical monitoring and decision-support terminal prototype for astronauts on long-duration missions (lunar, cislunar, future Mars transit). It evaluates physiological, environmental and radiation telemetry, raises Master Caution / Master Warning alerts, guides the crew through structured countermeasure checklists and keeps working without a link to Earth.
 
-NASA Space Apps Challenge 2026 | Challenge: *Create Health Monitoring Software for Astronauts on Space Missions*.
+NASA Space Apps Challenge 2026 — challenge: *Create Health Monitoring Software for Astronauts on Space Missions*.
 
-> **Prototype (not a certified medical device).** All limits are demonstration values, all countermeasure texts are demonstration procedures, and every simulated value is labeled `SIM` in the interface. See [docs/SCIENTIFIC_LIMITATIONS.md](docs/SCIENTIFIC_LIMITATIONS.md).
+> **Prototype — not a certified medical device.** All limits are demonstration values, all countermeasure texts are demonstration procedures, and every simulated value is labeled `SIM` in the interface. See [docs/SCIENTIFIC_LIMITATIONS.md](docs/SCIENTIFIC_LIMITATIONS.md).
 
 ![COMMAND screen during the HIGH CO2 scenario](docs/screenshots/02-high-co2-master-warning.png)
 
-**Multi-screen crew interface** (switch with the tabs in the status bar or keys `1` / `2`, plus `3` when CFMS is enabled):
-- **1 · COMMAND:** action-centric view with mission status, R.I.D.G.E. focus, EVA readiness (decision support), crew biometrics, the hand-made Digital Human Twin, active alerts with the countermeasure guide, cabin & radiation strip, and simulation control.
-- **2 · ENGINEERING:** full telemetry panels, zone details, radiation and NASA DONKI context, cabin ECLSS, persistent mission event log, and simulator.
-- **3 · FITNESS (optional CFMS):** 24-hour crew exercise timeline, safety gates, medical clearances, and post-exercise recovery monitoring.
+**Two screens, one application** — switch with the tabs in the status bar or the keys `1` / `2`:
+- **1 · COMMAND** — action-centric view: mission status, R.I.D.G.E. focus, EVA readiness (decision support), crew biometrics, the hand-made Digital Human Twin, active alerts with the countermeasure guide, cabin & radiation strip and simulation control.
+- **2 · ENGINEERING** — full telemetry panels, zone details, radiation and NASA DONKI context, cabin ECLSS, persistent mission event log and simulator.
 
 ## Quick start
 
@@ -97,9 +96,9 @@ Details: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · API: [docs/API.md](docs
 
 ## NASA data and references
 
-- **NASA DONKI** (Space Weather Database Of Notifications, Knowledge, Information) via https://api.nasa.gov/: `GET /DONKI/FLR` and `GET /DONKI/SEP`, last 7 days; `GET /DONKI/notifications?type=FLR` as fallback when the FLR endpoint is unavailable. Context only, never a dose measurement.
-- **NASA Open Science Data Repository** (https://osdr.nasa.gov/): research references OSD-569, OSD-360, OSD-479, OSD-922 (metadata inspected).
-- **NASA-STD-3001** (Vol. 1: https://www.nasa.gov/reference/nasa-std-3001v1/ and Vol. 2: https://www.nasa.gov/reference/nasa-std-3001v2/): reference for crew health and environmental requirements; no numeric value is copied into the demonstration thresholds.
+- **NASA DONKI** (Space Weather Database Of Notifications, Knowledge, Information) via https://api.nasa.gov/ — `GET /DONKI/FLR` and `GET /DONKI/SEP`, last 7 days; `GET /DONKI/notifications?type=FLR` as fallback when the FLR endpoint is unavailable. Context only, never a dose measurement.
+- **NASA Open Science Data Repository** https://osdr.nasa.gov/ — research references OSD-569, OSD-360, OSD-479, OSD-922 (metadata inspected).
+- **NASA-STD-3001** Vol. 1 https://www.nasa.gov/reference/nasa-std-3001v1/ and Vol. 2 https://www.nasa.gov/reference/nasa-std-3001v2/ — reference for crew health and environmental requirements; no numeric value is copied into the demonstration thresholds.
 
 Full list and usage: [docs/DATA_SOURCES.md](docs/DATA_SOURCES.md)
 
@@ -128,4 +127,4 @@ AI tools were used in this project. See [AI_ATTRIBUTION.md](AI_ATTRIBUTION.md) f
 
 ## License
 
-Apache License 2.0 (see [LICENSE](LICENSE)). The “Half-Life HEV” reference is an aesthetic inspiration only; no Half-Life assets, dialogue or NASA logos are used.
+Apache License 2.0 — see [LICENSE](LICENSE). The “Half-Life HEV” reference is an aesthetic inspiration only; no Half-Life assets, dialogue or NASA logos are used.

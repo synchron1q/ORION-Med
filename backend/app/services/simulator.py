@@ -84,6 +84,10 @@ class Simulator:
             self.scenario = scenario
             self.scenario_started = core.now()
             self.fault_sent.clear()
+            if scenario == "nominal":
+                core.ksp_acked_phase = getattr(core, "ksp_current_phase", None)
+                if getattr(core, "ksp_last_seen", None) is not None:
+                    self.values.update(BASE)
             core.set_runtime("simulator.scenario", scenario, s)
             core.log("SIMULATOR", f"Scenario {SCENARIOS[scenario]['label']} activated (simulated data)", "SIMULATOR", s)
             if scenario == "solar_flare":

@@ -120,6 +120,10 @@ class HevCore:
         self.osdr = OsdrService(self)
         self.ksp_telemetry: dict[str, Any] = {}
         self.ksp_last_seen: datetime | None = None
+        self.ksp_current_phase: str = "NOMINAL_PAD"
+        self.ksp_acked_phase: str | None = None
+        self.ksp_was_in_space: bool = False
+        self.ksp_prev_alt: float | None = None
         self.fitness = None  # optional CFMS module, only with ORION_CFMS_ENABLED=true
         if settings.cfms_enabled:
             from app.cfms.service import FitnessService
@@ -726,37 +730,191 @@ class HevCore:
         protocols = {pid: p.to_public() for pid, p in self.reg.protocols.items()}
         return {"eva": evaluate_eva_readiness(state, risk, source), "triage": evaluate_triage_focus(state, protocols)}
 
+    def _classify_ksp_hazard(
+        self,
+        situation: str,
+        body: str,
+        altitude_m: float,
+        g_force: float,
+        mach: float,
+        eva_active: bool,
+    ) -> tuple[str, str]:
+        """Classify active KSP flight telemetry into a medical/environmental hazard regime."""
+        atmos_limits = {
+            "kerbin": 70000.0,
+            "eve": 90000.0,
+            "duna": 50000.0,
+            "laythe": 50000.0,
+            "jool": 200000.0,
+        }
+        body_key = (body or "kerbin").strip().lower()
+        atmos_limit = atmos_limits.get(body_key, 0.0)
+        sit = (situation or "FLIGHT").strip().upper()
+
+        # 1. Crew EVA in open space
+        if eva_active:
+            if atmos_limit == 0.0 or altitude_m >= atmos_limit * 0.5 or sit in ("ORBITING", "SUB_ORBITAL", "ESCAPING"):
+                self.ksp_was_in_space = True
+            return (
+                "EVA_OPEN_SPACE",
+                "EXTRAVEHICULAR ACTIVITY (EVA) — SUIT HYPOXIA & RADIATION EXPOSURE",
+            )
+
+        # 2. Open space / vacuum (above atmosphere or in orbit/trajectory around airless body)
+        in_open_space = False
+        if atmos_limit > 0.0 and altitude_m >= atmos_limit:
+            in_open_space = True
+        elif atmos_limit == 0.0 and sit in ("ORBITING", "SUB_ORBITAL", "ESCAPING", "DOCKED"):
+            in_open_space = True
+        elif sit in ("ORBITING", "ESCAPING") and altitude_m >= max(10000.0, atmos_limit * 0.95):
+            in_open_space = True
+
+        if in_open_space:
+            self.ksp_was_in_space = True
+            return (
+                "OPEN_SPACE",
+                "OPEN SPACE (VACUUM) — RADIATION STORM & ECLSS CO2 LOAD",
+            )
+
+        # 3. Atmospheric entry / aerobraking / high G-load
+        descending = self.ksp_prev_alt is not None and (self.ksp_prev_alt - altitude_m) > 10.0 and altitude_m > 1000.0
+        in_atmos_flight = (
+            atmos_limit > 0.0
+            and 250.0 < altitude_m < atmos_limit
+            and sit in ("FLYING", "SUB_ORBITAL", "ORBITING", "ESCAPING")
+        )
+        if in_atmos_flight and (
+            self.ksp_was_in_space
+            or sit == "SUB_ORBITAL"
+            or mach >= 1.15
+            or g_force >= 1.85
+            or descending
+        ):
+            return (
+                "ATMOS_ENTRY",
+                "ATMOSPHERIC ENTRY — G-LOAD TACHYCARDIA, BP DROP & THERMAL STRESS",
+            )
+
+        if sit in ("LANDED", "SPLASHED", "PRELAUNCH"):
+            self.ksp_was_in_space = False
+
+        return ("NOMINAL_PAD", "NOMINAL MODE (LAUNCH PAD / SURFACE)")
+
     def update_ksp_telemetry(self, payload: dict[str, Any]) -> dict[str, Any]:
         """Receive live vessel & Kerbal crew state from the KSP 1 OrionMedKSP VesselModule."""
         now = self.now()
         with self.lock:
             self.ksp_last_seen = now
+            situation = str(payload.get("situation") or "FLIGHT")
+            body = str(payload.get("body") or "Kerbin")
+            altitude_m = float(payload.get("altitude_m") or 0.0)
+            g_force = float(payload.get("g_force") or 1.0)
+            mach = float(payload.get("mach") or 0.0)
+            eva_active = bool(payload.get("eva_active", False))
+
+            hazard_phase, hazard_label = self._classify_ksp_hazard(
+                situation=situation,
+                body=body,
+                altitude_m=altitude_m,
+                g_force=g_force,
+                mach=mach,
+                eva_active=eva_active,
+            )
+            self.ksp_prev_alt = altitude_m
+
+            if hazard_phase != self.ksp_current_phase:
+                self.ksp_current_phase = hazard_phase
+                if hazard_phase != "NOMINAL_PAD":
+                    self.ksp_acked_phase = None
+                    self.log("KSP_BRIDGE", f"KSP Flight Trigger [{hazard_phase}]: {hazard_label}", "SENSOR")
+
             self.ksp_telemetry = {
                 "vessel_name": str(payload.get("vessel_name") or "UNKNOWN VESSEL"),
-                "situation": str(payload.get("situation") or "FLIGHT"),
-                "body": str(payload.get("body") or "Kerbin"),
-                "altitude_m": float(payload.get("altitude_m") or 0.0),
-                "g_force": float(payload.get("g_force") or 1.0),
-                "mach": float(payload.get("mach") or 0.0),
+                "situation": situation,
+                "body": body,
+                "altitude_m": altitude_m,
+                "g_force": g_force,
+                "mach": mach,
                 "met_s": float(payload.get("met_s") or 0.0),
-                "eva_active": bool(payload.get("eva_active", False)),
+                "eva_active": eva_active,
+                "hazard_phase": hazard_phase,
+                "hazard_label": hazard_label,
                 "emotion": str(payload.get("emotion") or "Neutral"),
                 "consciousness": str(payload.get("consciousness") or "Alert"),
-                "primary_cause": str(payload.get("primary_cause") or "All systems nominal"),
+                "primary_cause": str(payload.get("primary_cause") or hazard_label),
                 "critical_timer_s": float(payload.get("critical_timer_s") or 0.0),
                 "lethal_limit_s": float(payload.get("lethal_limit_s") or 30.0),
                 "crew": list(payload.get("crew") or []),
             }
-            if payload.get("ingest_biometrics"):
-                g = max(0.0, float(payload.get("g_force") or 1.0))
-                if g >= 3.0 and self.simulator.scenario == "nominal":
-                    hr = min(165.0, round(72.0 + (g - 1.0) * 14.5, 1))
-                    rr = min(30.0, round(14.0 + (g - 1.0) * 2.2, 1))
-                    bp = max(72.0, round(118.0 - max(0.0, g - 4.0) * 8.5, 1))
+
+            if payload.get("ingest_biometrics", True):
+                if hazard_phase != "NOMINAL_PAD" and self.ksp_acked_phase != hazard_phase:
+                    if hazard_phase == "EVA_OPEN_SPACE":
+                        if self.simulator.enabled and self.simulator.scenario != "hypoxia":
+                            self.simulator.set_scenario("hypoxia")
+                        overrides = {
+                            "spo2": 81.4,
+                            "cabin_o2": 17.8,
+                            "cabin_pressure": 89.2,
+                            "heart_rate": 134.0,
+                            "resp_rate": 25.0,
+                            "dose_rate": 460.0,
+                        }
+                        self.simulator.values.update(overrides)
+                        self.ingest([
+                            TelemetryInput("spo2", 81.4, "%", now, "SENSOR", "GOOD", metadata={"ksp_hazard": hazard_phase}),
+                            TelemetryInput("cabin_o2", 17.8, "%", now, "SENSOR", "GOOD", metadata={"ksp_hazard": hazard_phase}),
+                            TelemetryInput("cabin_pressure", 89.2, "kPa", now, "SENSOR", "GOOD", metadata={"ksp_hazard": hazard_phase}),
+                            TelemetryInput("heart_rate", 134.0, "bpm", now, "SENSOR", "GOOD", metadata={"ksp_hazard": hazard_phase}),
+                            TelemetryInput("resp_rate", 25.0, "br/min", now, "SENSOR", "GOOD", metadata={"ksp_hazard": hazard_phase}),
+                            TelemetryInput("dose_rate", 460.0, "uGy/h", now, "SENSOR", "GOOD", metadata={"ksp_hazard": hazard_phase}),
+                        ])
+                    elif hazard_phase == "OPEN_SPACE":
+                        if self.simulator.enabled and self.simulator.scenario != "high_co2":
+                            self.simulator.set_scenario("high_co2")
+                        overrides = {
+                            "cabin_co2": 8.2,
+                            "dose_rate": 420.0,
+                            "heart_rate": 118.0,
+                            "resp_rate": 21.5,
+                        }
+                        self.simulator.values.update(overrides)
+                        self.ingest([
+                            TelemetryInput("cabin_co2", 8.2, "mmHg", now, "SENSOR", "GOOD", metadata={"ksp_hazard": hazard_phase}),
+                            TelemetryInput("dose_rate", 420.0, "uGy/h", now, "SENSOR", "GOOD", metadata={"ksp_hazard": hazard_phase}),
+                            TelemetryInput("heart_rate", 118.0, "bpm", now, "SENSOR", "GOOD", metadata={"ksp_hazard": hazard_phase}),
+                            TelemetryInput("resp_rate", 21.5, "br/min", now, "SENSOR", "GOOD", metadata={"ksp_hazard": hazard_phase}),
+                            TelemetryInput("pvt_mean_rt", 455.0, "ms", now, "SENSOR", "GOOD", metadata={"ksp_hazard": hazard_phase}),
+                        ])
+                    elif hazard_phase == "ATMOS_ENTRY":
+                        if self.simulator.enabled and self.simulator.scenario != "hemorrhage":
+                            self.simulator.set_scenario("hemorrhage")
+                        g = max(2.0, g_force)
+                        bp = max(68.0, round(76.0 - max(0.0, g - 2.5) * 2.5, 1))
+                        hr = min(168.0, round(144.0 + max(0.0, g - 2.0) * 3.5, 1))
+                        overrides = {
+                            "bp_systolic": bp,
+                            "heart_rate": hr,
+                            "resp_rate": 24.5,
+                            "hrv": 14.0,
+                            "body_temp": 38.2,
+                        }
+                        self.simulator.values.update(overrides)
+                        self.ingest([
+                            TelemetryInput("bp_systolic", bp, "mmHg", now, "SENSOR", "GOOD", metadata={"ksp_hazard": hazard_phase}),
+                            TelemetryInput("heart_rate", hr, "bpm", now, "SENSOR", "GOOD", metadata={"ksp_hazard": hazard_phase}),
+                            TelemetryInput("resp_rate", 24.5, "br/min", now, "SENSOR", "GOOD", metadata={"ksp_hazard": hazard_phase}),
+                            TelemetryInput("hrv", 14.0, "ms", now, "SENSOR", "GOOD", metadata={"ksp_hazard": hazard_phase}),
+                            TelemetryInput("body_temp", 38.2, "degC", now, "SENSOR", "GOOD", metadata={"ksp_hazard": hazard_phase}),
+                        ])
+                elif g_force >= 3.0 and self.simulator.scenario == "nominal":
+                    hr = min(165.0, round(72.0 + (g_force - 1.0) * 14.5, 1))
+                    rr = min(30.0, round(14.0 + (g_force - 1.0) * 2.2, 1))
+                    bp = max(72.0, round(118.0 - max(0.0, g_force - 4.0) * 8.5, 1))
                     self.ingest([
-                        TelemetryInput("heart_rate", hr, "bpm", now, "SENSOR", "GOOD", metadata={"ksp_g_force": g}),
-                        TelemetryInput("resp_rate", rr, "br/min", now, "SENSOR", "GOOD", metadata={"ksp_g_force": g}),
-                        TelemetryInput("bp_systolic", bp, "mmHg", now, "SENSOR", "GOOD", metadata={"ksp_g_force": g}),
+                        TelemetryInput("heart_rate", hr, "bpm", now, "SENSOR", "GOOD", metadata={"ksp_g_force": g_force}),
+                        TelemetryInput("resp_rate", rr, "br/min", now, "SENSOR", "GOOD", metadata={"ksp_g_force": g_force}),
+                        TelemetryInput("bp_systolic", bp, "mmHg", now, "SENSOR", "GOOD", metadata={"ksp_g_force": g_force}),
                     ])
             return self.ksp_status()
 
@@ -775,9 +933,11 @@ class HevCore:
                 "mach": 0.0,
                 "met_s": 0.0,
                 "eva_active": False,
+                "hazard_phase": "NOMINAL_PAD",
+                "hazard_label": None,
                 "emotion": "Neutral",
                 "consciousness": "Alert",
-                "primary_cause": "Awaiting KSP 1 Flight Scene (OrionMedKSP.dll)",
+                "primary_cause": None,
                 "critical_timer_s": 0.0,
                 "lethal_limit_s": 30.0,
                 "crew": [],

@@ -153,6 +153,36 @@ export interface Readiness {
 
 export interface Scenario { id: string; label: string; description: string; active: boolean }
 
+export interface KspCrewMember {
+  name: string;
+  trait: string;
+  type: string;
+  inactive: boolean;
+  state_label: "IN_COMMAND" | "IMPAIRED" | "UNCONSCIOUS" | string;
+}
+
+export interface KspLinkState {
+  connected: boolean;
+  last_seen: string | null;
+  age_s: number | null;
+  vessel_name: string | null;
+  situation: string | null;
+  body: string | null;
+  altitude_m: number;
+  g_force: number;
+  mach: number;
+  met_s: number;
+  eva_active: boolean;
+  hazard_phase?: "NOMINAL_PAD" | "OPEN_SPACE" | "EVA_OPEN_SPACE" | "ATMOS_ENTRY" | string;
+  hazard_label?: string;
+  emotion: string;
+  consciousness: string;
+  primary_cause: string;
+  critical_timer_s: number;
+  lethal_limit_s: number;
+  crew: KspCrewMember[];
+}
+
 export interface HevSystemState {
   server_time: string;
   version: string;
@@ -182,6 +212,7 @@ export interface HevSystemState {
   space_weather_simulation: SimulatedSpaceWeather | null;
   readiness?: Readiness;
   fitness?: FitnessState;
+  ksp?: KspLinkState;
 }
 
 export interface Protocol {
