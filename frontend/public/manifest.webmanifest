@@ -1,0 +1,10 @@
+{
+  "name": "ORION-MED // HEV-1",
+  "short_name": "HEV-1",
+  "description": "Autonomous astronaut health monitoring and decision-support prototype (not a medical device).",
+  "start_url": "/",
+  "display": "fullscreen",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [{ "src": "/icons/hev1.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

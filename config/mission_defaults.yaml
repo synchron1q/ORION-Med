@@ -1,0 +1,33 @@
+# AI-assisted (Claude, Anthropic) under the ORION-MED team's specification - see AI_ATTRIBUTION.md
+# ORION-MED // HEV-1 - mission defaults (fictional demonstration mission).
+mission:
+  id: HEV-DEMO-01
+  name: Lunar Transit Demonstration Mission
+  environment: CISLUNAR TRANSIT
+  vehicle: CREW VEHICLE (SIMULATED)
+  # Mission elapsed time at first launch of the application, in hours.
+  initial_met_hours: 76.5
+
+crew:
+  - {id: CM-1, name: "CM-1 (fictional)", role: COMMANDER, monitored: true}
+  - {id: CM-2, name: "CM-2 (fictional)", role: PILOT, monitored: false}
+  - {id: CM-3, name: "CM-3 (fictional)", role: MISSION SPECIALIST, monitored: false}
+  - {id: CM-4, name: "CM-4 (fictional)", role: MISSION SPECIALIST, monitored: false}
+
+simulator:
+  enabled_by_default: true
+  tick_interval_s: 1.0
+  default_scenario: nominal
+  seed: 2026
+
+sync:
+  interval_s: 3
+  batch_size: 50
+  max_backoff_s: 60
+
+# NASA DONKI settings (7-day lookback, 15-minute cache TTL, 5 s timeout) are
+# defined in backend/app/integrations/nasa_donki.py.
+
+osdr:
+  request_timeout_s: 10
+  refresh_interval_s: 86400

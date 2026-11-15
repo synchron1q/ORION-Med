@@ -1,0 +1,277 @@
+# AI-assisted (Claude, Anthropic) under the ORION-MED team's specification - see AI_ATTRIBUTION.md
+# ORION-MED // HEV-1 - parameter registry and DEMONSTRATION thresholds.
+#
+# IMPORTANT: every numeric limit in this file is a DEMONSTRATION value chosen
+# to make the prototype scenarios observable. None of them is taken from
+# NASA-STD-3001 or any flight rule. They are NOT clinical or operational limits.
+# valid_range = physically plausible input range used for sensor validation only.
+#
+# Severity bands: value >= *_high or <= *_low triggers the band.
+# hysteresis: the value must come back inside the limits by this margin before
+# an alert enters RECOVERY. recovery_hold_s: how long fresh nominal data must be
+# observed before resolution is considered verified.
+
+defaults:
+  stale_after_s: 8
+  stale_severity: CAUTION
+  hysteresis: 0
+  recovery_hold_s: 30
+  auto_clear: false
+
+parameters:
+  heart_rate:
+    label: Heart Rate
+    short: HR
+    unit: bpm
+    category: physiological
+    zone: cardiovascular
+    valid_range: [20, 250]
+    thresholds: {caution_high: 110, warning_high: 130, caution_low: 45, warning_low: 38}
+    hysteresis: 5
+    protocol: CM-CARDIO-01
+    sensor: CHEST BIOSENSOR
+  hrv:
+    label: Heart Rate Variability (RMSSD)
+    short: HRV
+    unit: ms
+    category: physiological
+    zone: cardiovascular
+    valid_range: [1, 300]
+    thresholds: {advisory_low: 25, caution_low: 15}
+    hysteresis: 3
+    auto_clear: true
+    sensor: CHEST BIOSENSOR
+  bp_systolic:
+    label: Systolic Blood Pressure
+    short: SBP
+    unit: mmHg
+    category: physiological
+    zone: cardiovascular
+    valid_range: [40, 260]
+    thresholds: {caution_low: 90, warning_low: 80, caution_high: 160, warning_high: 180}
+    hysteresis: 3
+    protocol: CM-HEMO-01
+    sensor: AUTOMATED BP MONITOR
+  spo2:
+    label: Blood Oxygen Saturation
+    short: SpO2
+    unit: "%"
+    category: physiological
+    zone: respiratory
+    valid_range: [50, 100]
+    thresholds: {caution_low: 94, warning_low: 90}
+    hysteresis: 1
+    protocol: CM-O2-01
+    sensor: FINGER PULSE OXIMETER
+  body_temp:
+    label: Core Body Temperature
+    short: TEMP
+    unit: "degC"
+    category: physiological
+    zone: head
+    valid_range: [30, 43]
+    thresholds: {caution_high: 38.0, warning_high: 39.5, caution_low: 35.5, warning_low: 35.0}
+    hysteresis: 0.2
+    protocol: CM-THERM-01
+    sensor: IN-EAR THERMOMETER
+  resp_rate:
+    label: Respiratory Rate
+    short: RR
+    unit: br/min
+    category: physiological
+    zone: respiratory
+    valid_range: [3, 60]
+    thresholds: {caution_high: 24, warning_high: 30, caution_low: 9, warning_low: 6}
+    hysteresis: 2
+    protocol: CM-O2-01
+    sensor: CHEST BIOSENSOR
+  hydration:
+    label: Hydration Status
+    short: HYD
+    unit: "%"
+    category: physiological
+    zone: musculoskeletal
+    valid_range: [0, 100]
+    available: false
+    sensor: NOT INSTRUMENTED
+  sleep_hours:
+    label: Sleep (last period)
+    short: SLEEP
+    unit: h
+    category: physiological
+    zone: head
+    valid_range: [0, 24]
+    thresholds: {advisory_low: 6, caution_low: 4}
+    hysteresis: 0.25
+    stale_after_s: 120
+    auto_clear: true
+    sensor: ACTIGRAPHY WATCH
+  activity_level:
+    label: Physical Activity
+    short: ACT
+    unit: MET
+    category: physiological
+    zone: musculoskeletal
+    valid_range: [0.5, 20]
+    sensor: ACTIGRAPHY WATCH
+  cabin_co2:
+    label: Cabin CO2 Partial Pressure
+    short: CO2
+    unit: mmHg
+    category: environmental
+    zone: respiratory
+    valid_range: [0, 40]
+    thresholds: {caution_high: 4.0, warning_high: 6.0}
+    hysteresis: 0.5
+    protocol: CM-ECLSS-01
+    sensor: ECLSS CO2 MONITOR
+  cabin_pressure:
+    label: Cabin Pressure
+    short: PRESS
+    unit: kPa
+    category: environmental
+    zone: respiratory
+    valid_range: [0, 120]
+    thresholds: {caution_low: 95, warning_low: 90}
+    hysteresis: 0.5
+    protocol: CM-ECLSS-02
+    sensor: ECLSS PRESSURE TRANSDUCER
+  cabin_o2:
+    label: Cabin Oxygen Concentration
+    short: O2
+    unit: "%"
+    category: environmental
+    zone: respiratory
+    valid_range: [0, 100]
+    thresholds: {caution_low: 19.5, warning_low: 18.0, caution_high: 23.5}
+    hysteresis: 0.2
+    protocol: CM-ECLSS-02
+    sensor: ECLSS O2 SENSOR
+  cabin_temp:
+    label: Cabin Temperature
+    short: CABIN T
+    unit: "degC"
+    category: environmental
+    zone: head
+    valid_range: [0, 50]
+    thresholds: {caution_high: 28, caution_low: 17}
+    hysteresis: 0.5
+    auto_clear: true
+    sensor: ECLSS THERMAL SENSOR
+  humidity:
+    label: Relative Humidity
+    short: RH
+    unit: "%"
+    category: environmental
+    zone: respiratory
+    valid_range: [0, 100]
+    thresholds: {caution_high: 70, caution_low: 25}
+    hysteresis: 2
+    auto_clear: true
+    sensor: ECLSS HUMIDITY SENSOR
+  dose_rate:
+    label: Radiation Dose Rate
+    short: DOSE RATE
+    unit: uGy/h
+    category: radiation
+    zone: radiation
+    valid_range: [0, 100000]
+    thresholds: {caution_high: 100, warning_high: 500}
+    hysteresis: 10
+    recovery_hold_s: 30
+    protocol: CM-RAD-01
+    sensor: ACTIVE DOSIMETER
+  accumulated_dose:
+    label: Accumulated Mission Dose
+    short: DOSE
+    unit: mGy
+    category: radiation
+    zone: radiation
+    valid_range: [0, 10000]
+    thresholds: {advisory_high: 25, caution_high: 40}
+    stale_after_s: 30
+    protocol: CM-RAD-02
+    sensor: ACTIVE DOSIMETER (INTEGRATED)
+  pvt_mean_rt:
+    label: PVT Mean Reaction Time
+    short: PVT RT
+    unit: ms
+    category: psychological
+    zone: head
+    valid_range: [100, 3000]
+    thresholds: {advisory_high: 350, caution_high: 450}
+    hysteresis: 20
+    stale_after_s: 0
+    auto_clear: true
+    protocol: CM-NEURO-01
+    sensor: PVT TERMINAL
+
+# Mission-configured radiation exposure indicator (DEMONSTRATION budget).
+radiation:
+  mission_dose_budget_mGy: 50
+
+# Digital Human Twin zones. Reference text is descriptive, not diagnostic.
+zones:
+  head:
+    label: HEAD / NEURO
+    reference: Core temperature, sleep, cabin thermal environment and PVT vigilance are grouped here as indicators of alertness and thermal state.
+  eyes:
+    label: EYES / VISION
+    reference: Spaceflight Associated Neuro-ocular Syndrome (SANS) is assessed with dedicated ocular examinations. No ocular sensor is instrumented in this prototype, so this zone shows no live telemetry.
+  cardiovascular:
+    label: CARDIOVASCULAR
+    reference: Heart rate and heart rate variability from the chest biosensor.
+  respiratory:
+    label: RESPIRATORY / ATMOSPHERE
+    reference: SpO2 and respiratory rate, correlated with cabin CO2, O2, pressure and humidity.
+  musculoskeletal:
+    label: MUSCULOSKELETAL
+    reference: Physical activity from actigraphy. Bone and muscle status require periodic assessments that are not instrumented in this prototype.
+  radiation:
+    label: WHOLE-BODY RADIATION
+    reference: Whole-body exposure indicator from the active dosimeter. Space-weather events provide context only and are not a dose measurement.
+
+# R.I.D.G.E. correlation rules (deterministic, configurable).
+# A rule fires when every condition has been observed inside window_s.
+# Findings are ADVISORY context: correlation is not causation.
+ridge_rules:
+  - id: RIDGE-CO2-COG
+    title: Elevated cabin CO2 coincides with physiological / cognitive change
+    window_s: 600
+    conditions:
+      - {parameter: cabin_co2, min_severity: CAUTION}
+    any_of:
+      - {parameter: pvt_mean_rt, min_severity: ADVISORY}
+      - {parameter: heart_rate, op: ">=", value: 85}
+      - {parameter: resp_rate, op: ">=", value: 18}
+    explanation: Elevated cabin CO2 may be a contributing environmental factor to the observed physiological or cognitive changes.
+  - id: RIDGE-HR-ACT
+    title: Elevated heart rate during high physical activity
+    window_s: 120
+    conditions:
+      - {parameter: heart_rate, min_severity: CAUTION}
+      - {parameter: activity_level, op: ">=", value: 6}
+    explanation: The heart-rate elevation coincides with high measured physical activity, such as scheduled exercise.
+  - id: RIDGE-RAD-SWX
+    title: Elevated dose rate coincides with a space-weather event
+    window_s: 86400
+    conditions:
+      - {parameter: dose_rate, min_severity: CAUTION}
+      - {space_weather_within_s: 86400}
+    explanation: A space-weather event was reported close to the dose-rate increase and may be related.
+  - id: RIDGE-BP-HR
+    title: Low blood pressure coincides with a high heart rate
+    window_s: 300
+    conditions:
+      - {parameter: bp_systolic, min_severity: CAUTION}
+      - {parameter: heart_rate, op: ">=", value: 110}
+    explanation: Low blood pressure together with a high heart rate is a pattern that can accompany blood loss or other circulatory compromise. Check for bleeding. This is a correlation, not a diagnosis.
+  - id: RIDGE-SPO2-ATM
+    title: Low SpO2 coincides with degraded cabin atmosphere
+    window_s: 600
+    conditions:
+      - {parameter: spo2, min_severity: CAUTION}
+    any_of:
+      - {parameter: cabin_pressure, min_severity: CAUTION}
+      - {parameter: cabin_o2, min_severity: CAUTION}
+    explanation: The low SpO2 reading coincides with a cabin atmosphere deviation that may be a contributing factor.

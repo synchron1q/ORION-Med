@@ -1,0 +1,43 @@
+# AI-assisted (Claude, Anthropic) under the ORION-MED team's specification - see AI_ATTRIBUTION.md
+# Authoritative references used by ORION-MED // HEV-1.
+# OSDR entries were inspected through the OSDR metadata API on 2026-11-14
+# (https://osdr.nasa.gov/osdr/data/osd/meta/<number>). They are research
+# references only - OSDR is NOT a real-time spacecraft telemetry feed.
+
+standards:
+  - id: NASA-STD-3001-V1
+    title: NASA Space Flight Human-System Standard, Volume 1 - Crew Health
+    url: https://www.nasa.gov/reference/nasa-std-3001v1/
+    use: Reference for crew-health requirements. No numeric value from it is used as a prototype threshold.
+  - id: NASA-STD-3001-V2
+    title: NASA Space Flight Human-System Standard, Volume 2 - Human Factors, Habitability, and Environmental Health
+    url: https://www.nasa.gov/reference/nasa-std-3001v2/
+    use: Reference for environmental-health and habitability requirements. No numeric value from it is used as a prototype threshold.
+
+apis:
+  - id: NASA-DONKI
+    title: NASA DONKI - Space Weather Database Of Notifications, Knowledge, Information (via api.nasa.gov)
+    url: https://api.nasa.gov/
+    use: Space-weather context (FLR, SEP, CME, GST). Not an astronaut dose measurement.
+  - id: NASA-OSDR
+    title: NASA Open Science Data Repository
+    url: https://osdr.nasa.gov/
+    use: Research dataset references.
+
+osdr_datasets:
+  - accession: OSD-569
+    title: Whole Blood Measurements from the SpaceX Inspiration4 Mission (RNA-seq, epitranscriptome, WGS, clonal hematopoiesis, CBC)
+    url: https://osdr.nasa.gov/bio/repo/data/studies/OSD-569
+    relevance: Human spaceflight biomedical measurements collected before, during and after a short orbital mission.
+  - accession: OSD-360
+    title: Effects of low dose space radiation exposures on the splenic metabolome
+    url: https://osdr.nasa.gov/bio/repo/data/studies/OSD-360
+    relevance: Rodent study on low-dose space radiation effects; background for the radiation module.
+  - accession: OSD-479
+    title: "The impact of deep space radiation on cognitive performance: From biological sex to biomarkers to countermeasures"
+    url: https://osdr.nasa.gov/bio/repo/data/studies/OSD-479
+    relevance: Rodent study linking deep-space radiation with cognitive performance; background for PVT and R.I.D.G.E. context.
+  - accession: OSD-922
+    title: Spaceflight induces systemic effects on extracellular matrix and immune system in different age-stages - Heart ventricles data
+    url: https://osdr.nasa.gov/bio/repo/data/studies/OSD-922
+    relevance: Rodent spaceflight study on cardiac tissue; background for the cardiovascular zone.

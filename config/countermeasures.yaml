@@ -1,0 +1,148 @@
+# AI-assisted (Claude, Anthropic) under the ORION-MED team's specification - see AI_ATTRIBUTION.md
+# ORION-MED // HEV-1 - countermeasure guides.
+#
+# DEMONSTRATION PROCEDURES. These guides are original prototype content written
+# to demonstrate the decision-support workflow. They are NOT NASA-approved
+# protocols and NOT medical treatment instructions. Kit identifiers are
+# prototype equipment labels, not real NASA hardware.
+
+provenance: DEMONSTRATION PROCEDURE - NOT A NASA-APPROVED PROTOCOL
+
+protocols:
+  CM-ECLSS-01:
+    title: Elevated Cabin CO2
+    description: The carbon dioxide level in the cabin air is above the configured limit. High CO2 can cause headache, faster breathing and reduced concentration. The goal is to confirm the reading and restore CO2 removal.
+    subsystem: ECLSS / ATMOSPHERE
+    kit: KIT ECLSS-03
+    kit_contents: [Portable CO2 monitor, Spare sensor cartridge, Checklist card ECLSS-03]
+    duration_min: 10
+    steps:
+      - Announce the elevated CO2 condition to all crew members.
+      - Open the ECLSS display and confirm the CO2 removal system is running.
+      - Verify cabin fans operate and no stowage blocks the air inlets near the crew.
+      - Retrieve KIT ECLSS-03 and cross-check cabin CO2 with the portable monitor.
+      - Reduce physical exertion until CO2 returns to the configured range.
+      - Log symptoms such as headache or shortness of breath for the flight surgeon.
+    resolution: Cabin CO2 must stay below the caution limit minus hysteresis, with fresh sensor data, for the configured recovery hold time.
+  CM-CARDIO-01:
+    title: Heart Rate Outside Configured Limits
+    description: The heart rate is outside the configured range. This may be caused by exertion, stress, a loose sensor or a medical condition. The goal is to confirm the reading and inform the flight surgeon.
+    subsystem: CARDIOVASCULAR
+    kit: KIT C-02
+    kit_contents: [Backup pulse monitor, Spare chest-strap electrodes, Symptom log card]
+    duration_min: 8
+    steps:
+      - Stop current physical activity and rest in a restrained position.
+      - Check chest biosensor placement and electrode contact.
+      - Confirm the heart rate with the backup pulse monitor from KIT C-02.
+      - Record any symptoms such as chest discomfort, dizziness or palpitations.
+      - Repeat the measurement after five minutes of rest.
+      - If the reading persists or symptoms are present, contact the flight surgeon per mission medical procedure.
+    resolution: Heart rate must return inside the configured limits by the hysteresis margin, with fresh sensor data, for the recovery hold time.
+  CM-HEMO-01:
+    title: Low Blood Pressure - Check Circulation and Bleeding
+    description: Systolic blood pressure is outside the configured range. Together with a high heart rate this can accompany blood loss or other circulatory compromise. A loose or misplaced cuff can produce false readings, so the reading is confirmed while bleeding is checked.
+    subsystem: CARDIOVASCULAR
+    kit: KIT A-1
+    kit_contents: [Tourniquet, Hemostatic gauze, Pressure dressing, Manual blood pressure cuff, Checklist card A-1]
+    duration_min: 5
+    steps:
+      - Stop activity, restrain the crew member supine and call the crew medical officer.
+      - Check for external bleeding and apply firm direct pressure with a pressure dressing from KIT A-1.
+      - If limb bleeding is not controlled by pressure, apply the tourniquet from KIT A-1 above the wound and note the time.
+      - Confirm blood pressure with the manual cuff from KIT A-1 and repeat heart rate.
+      - Inform the flight surgeon (or log for the next AOS) and follow the mission medical procedure.
+    resolution: Blood pressure and heart rate back inside the configured limits for the hold time with fresh data.
+  CM-O2-01:
+    title: Oxygenation / Breathing Outside Configured Limits
+    description: Blood oxygen saturation or breathing rate is outside the configured range. A cold hand or a loose finger sensor can produce false low readings, so the first step is confirmation.
+    subsystem: RESPIRATORY
+    kit: KIT O2-A
+    kit_contents: [Backup pulse oximeter, Oxygen mask assembly, Checklist card O2-A]
+    duration_min: 6
+    steps:
+      - Reposition the finger sensor and warm the hand.
+      - Confirm SpO2 with the backup oximeter from KIT O2-A.
+      - Check cabin O2 concentration and cabin pressure on the ECLSS display.
+      - If the low reading is confirmed, follow the mission medical procedure for supplemental oxygen.
+      - Inform the flight surgeon and log the event.
+    resolution: SpO2 and respiratory rate must return inside configured limits with fresh sensor data for the recovery hold time.
+  CM-THERM-01:
+    title: Core Temperature Outside Configured Limits
+    description: Core body temperature is outside the configured range. Readings can be affected by sensor placement, exercise or cabin temperature.
+    subsystem: THERMAL / NEURO
+    kit: KIT C-02
+    kit_contents: [Backup thermometer, Symptom log card]
+    duration_min: 6
+    steps:
+      - Re-measure with the backup thermometer from KIT C-02.
+      - Check cabin temperature and adjust clothing as appropriate.
+      - Record symptoms and recent activity.
+      - Contact the flight surgeon if the value persists.
+    resolution: Core temperature must return inside configured limits with fresh sensor data for the recovery hold time.
+  CM-ECLSS-02:
+    title: Cabin Atmosphere Deviation
+    description: Cabin pressure or oxygen concentration is outside the configured range. This affects every crew member and requires immediate attention.
+    subsystem: ECLSS / ATMOSPHERE
+    kit: KIT ECLSS-01
+    kit_contents: [Portable pressure gauge, Portable O2 analyzer, Checklist card ECLSS-01]
+    duration_min: 10
+    steps:
+      - Alert all crew members.
+      - Confirm the reading with the portable instruments in KIT ECLSS-01.
+      - Review the pressure and O2 trend on the ECLSS display.
+      - Execute the mission atmosphere off-nominal checklist.
+      - Report the condition to mission control at the next opportunity.
+    resolution: Cabin pressure and O2 must return inside configured limits with fresh sensor data for the recovery hold time.
+  CM-RAD-01:
+    title: Elevated Radiation Dose Rate
+    description: The active dosimeter reports a dose rate above the configured limit. This can happen during a solar particle event. The goal is to reduce exposure until the dose rate returns to normal levels.
+    subsystem: RADIATION / WHOLE BODY
+    kit: KIT R-01
+    kit_contents: [Personal dosimeters, Shelter configuration card R-01]
+    duration_min: 15
+    steps:
+      - Announce the radiation condition to all crew members.
+      - Move to the designated radiation shelter area defined in the mission plan.
+      - Wear the personal dosimeter from KIT R-01.
+      - Minimize time outside the shelter area until the dose rate returns to configured levels.
+      - Hold any planned EVA and request mission control review of exposure status.
+    resolution: Dose rate must stay below the caution limit minus hysteresis, with fresh dosimeter data, for the recovery hold time.
+  CM-RAD-02:
+    title: Mission Exposure Indicator
+    description: Accumulated mission dose has reached a configured fraction of the mission dose budget. This is an informational planning indicator, not a health diagnosis.
+    subsystem: RADIATION / WHOLE BODY
+    kit: KIT R-01
+    kit_contents: [Personal dosimeters, Exposure log card]
+    duration_min: 5
+    steps:
+      - Review accumulated dose and recent dose-rate history.
+      - Report the exposure status to mission control.
+      - Review upcoming EVA plans with mission control.
+    resolution: Informational indicator. Cleared only by mission configuration change.
+  CM-NEURO-01:
+    title: Reduced Vigilance (PVT)
+    description: The reaction time in the psychomotor vigilance test is slower than the configured limit. Fatigue, poor sleep or cabin conditions can slow reactions.
+    subsystem: NEURO / COGNITIVE
+    kit: NONE
+    kit_contents: []
+    duration_min: 20
+    steps:
+      - Postpone safety-critical tasks if the timeline allows.
+      - Check cabin CO2 and cabin temperature.
+      - Review recent sleep duration and the work-rest schedule.
+      - Repeat the PVT after 15 minutes.
+    resolution: A new PVT result inside the configured limit.
+  CM-SENSOR-01:
+    title: Telemetry Unavailable
+    description: A sensor reports a fault or has stopped sending data. Missing data is never treated as a normal value. The measurement must be restored or taken manually.
+    subsystem: INSTRUMENTATION
+    kit: KIT BIO-01
+    kit_contents: [Spare biosensor, Spare batteries, Electrode set]
+    duration_min: 5
+    steps:
+      - Check sensor attachment, battery and wireless pairing.
+      - Replace the sensor with the spare from KIT BIO-01 if needed.
+      - Take a manual measurement with backup equipment until telemetry returns.
+      - Confirm fresh data is displayed for the affected parameter.
+    resolution: Valid telemetry must be received again for the recovery hold time.

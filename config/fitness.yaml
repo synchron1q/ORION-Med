@@ -1,0 +1,134 @@
+# AI-assisted (Claude, Anthropic) under the ORION-MED team's specification - see AI_ATTRIBUTION.md
+# ORION-MED CFMS - Crew Fitness Management System configuration.
+#
+# ALL VALUES ARE DEMONSTRATION / SIMULATED. This is not a NASA exercise
+# prescription, not a flight rule and not a validated medical criterion.
+# Equipment is SIMULATED with neutral generic names; the application does not
+# control any real hardware.
+#
+# There is deliberately NO medical clearance in this file. Medical Clearance
+# is a runtime record limited to one crew member, one exercise type and a
+# validity period (see clearance.max_validity_h).
+
+provenance: "DEMONSTRATION TRAINING PROGRAM - SIMULATED. Not a NASA exercise prescription or flight rule."
+
+scheduler:
+  slot_min: 15                 # placement grid, aligned to MET
+  horizon_h: 48                # planning horizon (allowed 24-72)
+  notify_lead_min: 15          # crew notification before a session
+  placement_lead_min: 10       # new or moved sessions start at least this far ahead
+  start_early_min: 15          # a session may be started this long before its planned start
+  start_grace_min: 15          # ... and up to this long after; later it is MISSED
+  max_reschedules: 2           # automatic reschedules after a missed session
+  min_gap_same_crew_min: 120   # between two sessions of one crew member
+  device_turnaround_min: 15    # between two users of one device
+  replan_interval_s: 5         # background check (missed sessions, horizon, notifications)
+
+# How planned activities constrain exercise. Buffers in minutes.
+# scope crew: applies to the crew listed on the activity.
+# scope vehicle: applies to every crew member (vehicle-wide operation).
+activity_rules:
+  SLEEP:        {scope: crew,    before_min: 90,  after_min: 60}
+  EVA:          {scope: crew,    before_min: 360, after_min: 240}
+  EVA_PREP:     {scope: crew,    before_min: 60,  after_min: 0}
+  MANEUVER:     {scope: vehicle, before_min: 30,  after_min: 30}
+  CRITICAL_OPS: {scope: vehicle, before_min: 30,  after_min: 30}
+  DOCKING:      {scope: vehicle, before_min: 60,  after_min: 30}
+  MEAL:         {scope: crew,    before_min: 0,   after_min: 30}
+  CONFERENCE:   {scope: crew,    before_min: 0,   after_min: 0}
+  HYGIENE:      {scope: crew,    before_min: 0,   after_min: 0}
+  WORK:         {scope: crew,    before_min: 0,   after_min: 0}
+  MEDICAL:      {scope: crew,    before_min: 0,   after_min: 30}
+  MAINTENANCE:  {scope: crew,    before_min: 0,   after_min: 0}   # with device_id it also blocks that device
+
+# Cruise is NOT automatically safe: activities and buffers are always checked.
+forbidden_phase_types: [LAUNCH, ASCENT, ORBIT_INSERTION, ENTRY, LANDING]
+
+exercise_types:
+  AEROBIC:
+    label: "Aerobic session"
+    duration_min: 30
+    device_classes: [CYCLE, TREADMILL]   # in order of preference
+    profile: EXP-AEROBIC-DEMO
+  RESISTIVE:
+    label: "Resistive session"
+    duration_min: 45
+    device_classes: [RESISTIVE]
+    profile: EXP-RESISTIVE-DEMO
+
+devices:
+  - {id: ERG-01, label: "Cycle ergometer (SIMULATED)", class: CYCLE, initial_status: OPERATIONAL}
+  - {id: TRD-01, label: "Treadmill with harness (SIMULATED)", class: TREADMILL, initial_status: OPERATIONAL}
+  - {id: RES-01, label: "Resistive exercise device (SIMULATED)", class: RESISTIVE, initial_status: OPERATIONAL}
+
+# DEMONSTRATION daily program. preferred_start_h: hours after the start of the MET day.
+program:
+  CM-1: [{type: AEROBIC, preferred_start_h: 2.0}, {type: RESISTIVE, preferred_start_h: 8.0}]
+  CM-2: [{type: AEROBIC, preferred_start_h: 2.0}, {type: RESISTIVE, preferred_start_h: 9.0}]
+  CM-3: [{type: AEROBIC, preferred_start_h: 3.0}, {type: RESISTIVE, preferred_start_h: 10.0}]
+  CM-4: [{type: AEROBIC, preferred_start_h: 4.0}, {type: RESISTIVE, preferred_start_h: 11.0}]
+
+safety_gate:
+  # Must be fresh (status OK) for an instrumented crew member, otherwise the
+  # data is incomplete and the session needs a Medical Clearance.
+  required_parameters: [heart_rate, spo2]
+  # Cabin atmosphere must be monitored (status OK) for every session. Missing
+  # cabin data BLOCKS the session: a Medical Clearance cannot vouch for it.
+  required_cabin_parameters: [cabin_co2, cabin_o2, cabin_pressure]
+
+clearance:
+  max_validity_h: 24
+  issuer_label: "Medical officer / flight surgeon (SIMULATED)"
+
+# DEMONSTRATION post-session heart-rate recovery criteria (monitored crew member
+# only; crew members without a biosensor are always DATA_INCOMPLETE).
+# REVIEW or DATA_INCOMPLETE makes the next session of that crew member
+# CLEARANCE_REQUIRED, and only a Medical Clearance recorded AFTER that finding
+# can cover it.
+recovery:
+  window_min: 10               # observation window after the session ends
+  hrr60_min_bpm: 12            # heart-rate drop in the first 60 s below which recovery needs review
+  baseline_tolerance_bpm: 10   # "back to baseline" = within the pre-session heart rate + tolerance
+  elevated_response_bpm: 20    # end-of-session HR this far above the pre-session HR = elevated response
+  validity_h: 24               # how long a recovery result affects the next session's gate
+
+# SIMULATED physiological load. While a session of the monitored crew member is
+# IN PROGRESS, the mission simulator moves these simulated sensor values towards
+# the targets below (through the normal ingest path; alerts react as usual).
+# An active simulator scenario (e.g. TACHYCARDIA) takes precedence.
+simulated_load:
+  # AEROBIC heart rate follows the reported average of ISS CEVIS sessions (REF-EX-CEVIS-HR-AVG).
+  AEROBIC:   {heart_rate: 135, hrv: 30, resp_rate: 21, activity_level: 7.0}
+  RESISTIVE: {heart_rate: 112, hrv: 36, resp_rate: 18, activity_level: 6.5}
+
+# SIMULATED fictional crew baselines (not real people, not measured values).
+crew_profiles:
+  CM-1: {hrmax_bpm: 182, resting_hr_bpm: 62}
+  CM-2: {hrmax_bpm: 178, resting_hr_bpm: 60}
+  CM-3: {hrmax_bpm: 186, resting_hr_bpm: 58}
+  CM-4: {hrmax_bpm: 175, resting_hr_bpm: 64}
+
+# Heart-rate alarm policy during a crew-confirmed exercise session of the monitored
+# crew member (heart rate only; every other parameter, SpO2 included, keeps its
+# global limits; low-side heart-rate limits stay global):
+#   context_hrmax - while the session is IN PROGRESS and during its recovery
+#                   observation, the high heart-rate alarm limits are derived from the
+#                   crew member's individual HRmax. Every switch is logged and sent to
+#                   the ground queue. Rationale: reported average session heart rate on
+#                   ISS is 131-135 bpm (REF-EX-*-HR-AVG), above the 130 bpm global warning.
+#   global        - the global limits in demo_thresholds.yaml always apply (v1.0.4-1.0.6).
+exercise_alarm_policy: context_hrmax
+exercise_hr_alarm_pct_hrmax: {caution_high: 95, warning_high: 100}
+
+# DEMONSTRATION in-session monitoring profiles. Display and mission-log only:
+# they never change the global HEV-1 alert limits and never suppress alerts.
+exercise_profiles:
+  EXP-AEROBIC-DEMO:
+    label: "Aerobic session monitoring profile"
+    heart_rate_pct_hrmax: {target_low: 70, target_high: 90, review_above: 95, stop_above: 100}
+    reference: REF-EX-HR-TARGET   # 70-90 % HRmax target (NASA OCHMO-TB-031)
+    spo2: {review_below: 93, stop_below: 90}
+  EXP-RESISTIVE-DEMO:
+    label: "Resistive session monitoring profile"
+    heart_rate_pct_hrmax: {target_low: 50, target_high: 85, review_above: 92, stop_above: 100}
+    spo2: {review_below: 93, stop_below: 90}

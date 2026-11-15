@@ -1,0 +1,43 @@
+# AI-assisted (Claude, Anthropic) under the ORION-MED team's specification - see AI_ATTRIBUTION.md
+# ORION-MED CFMS - baseline Mission Plan.
+#
+# SIMULATED, fictional demonstration timeline. NOT a NASA flight plan.
+#
+# This file is the ONLY source of the baseline plan. It is never copied into
+# SQLite. SQLite stores only runtime additions (unplanned activities entered
+# by the crew, the simulator or the optional kRPC adapter) and CFMS records.
+# To change the baseline, edit this file; on the next start the planner
+# detects the new revision (content hash) and replans deterministically.
+#
+# Times are Mission Elapsed Time (MET) in hours. A MET day is 24 h long:
+# day N covers MET [24*N, 24*N + 24).
+
+provenance: "SIMULATED MISSION PLAN - fictional demonstration timeline, not a NASA flight plan"
+plan_id: HEV-DEMO-01-PLAN
+revision: A
+coverage_met_h: [0, 720]
+
+# Mission phases (non-overlapping, ordered). The fitness policy in
+# fitness.yaml decides which phase types forbid exercise.
+phases:
+  - {id: PH-TLC, type: CRUISE, title: "Translunar cruise", start_met_h: 0, end_met_h: 118}
+  - {id: PH-LOI, type: ORBIT_INSERTION, title: "Lunar orbit insertion", start_met_h: 118, end_met_h: 122}
+  - {id: PH-LOO, type: ORBIT_OPS, title: "Lunar orbit operations", start_met_h: 122, end_met_h: 720}
+
+# Repeats every MET day. start_h is hours after the start of the MET day.
+# crew: [ALL] applies to every crew member.
+daily_template:
+  - {id: HYG, type: HYGIENE, title: "Post-sleep hygiene", start_h: 0.0, duration_min: 30, crew: [ALL]}
+  - {id: BRK, type: MEAL, title: "Breakfast", start_h: 0.5, duration_min: 30, crew: [ALL]}
+  - {id: DPC, type: CONFERENCE, title: "Daily planning conference", start_h: 1.0, duration_min: 30, crew: [ALL]}
+  - {id: LUN, type: MEAL, title: "Lunch", start_h: 6.0, duration_min: 45, crew: [ALL]}
+  - {id: DIN, type: MEAL, title: "Dinner", start_h: 13.0, duration_min: 45, crew: [ALL]}
+  - {id: SLP, type: SLEEP, title: "Sleep period (mandatory rest)", start_h: 16.0, duration_min: 480, crew: [ALL]}
+
+# One-off activities at absolute MET.
+events:
+  - {id: TCM-3, type: MANEUVER, title: "Trajectory correction burn TCM-3", start_met_h: 80.0, duration_min: 45, crew: [ALL]}
+  - {id: MAINT-ERG-01, type: MAINTENANCE, title: "Cycle ergometer inspection", start_met_h: 86.0, duration_min: 60, crew: [CM-4], device_id: ERG-01}
+  - {id: EVA-1-PREP, type: EVA_PREP, title: "EVA-1 preparation", start_met_h: 101.0, duration_min: 120, crew: [CM-1, CM-3]}
+  - {id: EVA-1, type: EVA, title: "EVA-1 external inspection", start_met_h: 103.0, duration_min: 240, crew: [CM-1, CM-3]}
+  - {id: LOI-BURN, type: CRITICAL_OPS, title: "Lunar orbit insertion burn", start_met_h: 119.0, duration_min: 60, crew: [ALL]}

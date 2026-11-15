@@ -1,0 +1,48 @@
+# AI-assisted (Claude, Anthropic) under the ORION-MED team's specification - see AI_ATTRIBUTION.md
+# ORION-MED // HEV-1 - NASA reference values (context only).
+#
+# Values copied from public NASA documents and checked against them on verified_on.
+# They are shown next to DEMONSTRATION values so that every number in the interface
+# has a visible origin. They do NOT set any HEV-1 alarm limit and do NOT certify
+# compliance with any NASA standard. NASA notes that fitness-for-duty values
+# "are not absolute thresholds" (OCHMO-TB-031).
+#
+# value_type:
+#   STANDARD_REQUIREMENT - requirement text as quoted in the source
+#   OBSERVED_STATISTIC   - statistic of a studied group (not a prescription)
+#   PROGRAM_TARGET       - training target described in the source
+
+provenance: "Public NASA documents, context only - not an alarm limit, not a certification"
+verified_on: "2026-11-15"
+
+sources:
+  OCHMO-TB-031:
+    title: "NASA OCHMO Technical Brief OCHMO-TB-031: Exercise Overview"
+    url: "https://www.nasa.gov/ochmo-tb-031-exercise-overview-2/"
+  SCOTT-2023:
+    title: "Scott J.M. et al. (2023). Effects of exercise countermeasures on multisystem function in long duration spaceflight astronauts. npj Microgravity 9:11"
+    url: "https://doi.org/10.1038/s41526-023-00256-5"
+  OCHMO-TB-041:
+    title: "NASA OCHMO Technical Brief OCHMO-TB-041: Sleep Accommodations"
+    url: "https://www.nasa.gov/wp-content/uploads/2023/12/ochmo-tb-041-sleep-accommodations.pdf"
+
+values:
+  - {id: REF-EX-HR-TARGET, group: exercise, label: "Target peak heart rate, long-duration exercise", value: [70, 90], unit: "% HRmax", value_type: PROGRAM_TARGET, source: OCHMO-TB-031}
+  - {id: REF-EX-CEVIS-HR-AVG, group: exercise, label: "Average heart rate, cycle ergometer (CEVIS) sessions", value: 135, unit: bpm, value_type: OBSERVED_STATISTIC, statistic: "average as reported", population: "ISS long-duration crew, Scott et al. 2023 (N = 46)", source: OCHMO-TB-031}
+  - {id: REF-EX-T2-HR-AVG, group: exercise, label: "Average heart rate, treadmill (T2) sessions", value: 131, unit: bpm, value_type: OBSERVED_STATISTIC, statistic: "average as reported", population: "ISS long-duration crew, Scott et al. 2023 (N = 46)", source: OCHMO-TB-031}
+  - {id: REF-EX-CEVIS-HR-PEAK, group: exercise, label: "Peak heart rate, CEVIS sessions", value: 158, unit: bpm, value_type: OBSERVED_STATISTIC, statistic: "as reported", population: "ISS long-duration crew, Scott et al. 2023 (N = 46)", source: OCHMO-TB-031}
+  - {id: REF-EX-T2-HR-PEAK, group: exercise, label: "Peak heart rate, T2 sessions", value: 153, unit: bpm, value_type: OBSERVED_STATISTIC, statistic: "as reported", population: "ISS long-duration crew, Scott et al. 2023 (N = 46)", source: OCHMO-TB-031}
+  - {id: REF-EX-CEVIS-DUR, group: exercise, label: "Average session duration, CEVIS", value: 26, unit: min, value_type: OBSERVED_STATISTIC, statistic: "average as reported", source: OCHMO-TB-031}
+  - {id: REF-EX-T2-DUR, group: exercise, label: "Average session duration, T2", value: 27, unit: min, value_type: OBSERVED_STATISTIC, statistic: "average as reported", source: OCHMO-TB-031}
+  - {id: REF-EX-CEVIS-PCT70, group: exercise, label: "Session time above 70 % of peak HR, CEVIS / T2", value: [76, 69], unit: "%", value_type: OBSERVED_STATISTIC, statistic: "as reported", source: OCHMO-TB-031}
+  - {id: REF-EX-CEVIS-PCT90, group: exercise, label: "Session time above 90 % of peak HR, CEVIS / T2", value: [13, 11], unit: "%", value_type: OBSERVED_STATISTIC, statistic: "as reported", source: OCHMO-TB-031}
+  - {id: REF-EX-WEEKLY, group: exercise, label: "Aerobic and resistance exercise per week", value: 600, unit: "min/week (approx.)", value_type: OBSERVED_STATISTIC, statistic: "approximate, as reported", population: "N = 46, missions of 178 ± 48 d", source: SCOTT-2023}
+  - {id: REF-EX-HETEROGENEITY, group: exercise, label: "Range of pre- to postflight change across systems", value: [-30, 5], unit: "%", value_type: OBSERVED_STATISTIC, statistic: "range as reported", source: SCOTT-2023}
+  - {id: REF-STD-V1-4001, group: requirement, label: "Microgravity EVA aerobic capacity (VO2max)", value: 32.9, unit: "ml/(kg·min), at or above", value_type: STANDARD_REQUIREMENT, requirement: "NASA-STD-3001 V1 4001, as quoted in OCHMO-TB-031", source: OCHMO-TB-031}
+  - {id: REF-STD-V1-4002, group: requirement, label: "Surface EVA aerobic capacity (VO2max)", value: 36.5, unit: "ml/(kg·min), at or above", value_type: STANDARD_REQUIREMENT, requirement: "NASA-STD-3001 V1 4002, as quoted in OCHMO-TB-031", source: OCHMO-TB-031}
+  - {id: REF-STD-V1-4003, group: requirement, label: "In-mission aerobic capacity", value: 80, unit: "% of pre-mission, at or above", value_type: STANDARD_REQUIREMENT, requirement: "NASA-STD-3001 V1 4003, as quoted in OCHMO-TB-031", source: OCHMO-TB-031}
+  - {id: REF-STD-V1-4024, group: requirement, label: "In-mission skeletal muscle strength", value: 80, unit: "% of baseline, at or above", value_type: STANDARD_REQUIREMENT, requirement: "NASA-STD-3001 V1 4024, as quoted in OCHMO-TB-031", source: OCHMO-TB-031}
+  - {id: REF-STD-V1-4027, group: requirement, label: "In-mission BMD: hip and spine / femoral neck", value: [95, 90], unit: "% of pre-mission, at or above", value_type: STANDARD_REQUIREMENT, requirement: "NASA-STD-3001 V1 4027, as quoted in OCHMO-TB-031", source: OCHMO-TB-031}
+  - {id: REF-VO2-INFLIGHT, group: exercise, label: "In-flight VO2max change, long-duration (average and range)", value: [-7.4, -2.35, -11.21], unit: "%", value_type: OBSERVED_STATISTIC, statistic: "average, range as reported", source: OCHMO-TB-031}
+  - {id: REF-SLEEP-INFLIGHT, group: sleep, label: "Average nightly sleep, Shuttle and ISS (Barger et al. 2014)", value: [6.0, 6.5], unit: "h (approx.)", value_type: OBSERVED_STATISTIC, statistic: "approximate average as summarized", source: OCHMO-TB-041}
+  - {id: REF-SLEEP-R7, group: sleep, label: "Sleep duration 7 days after landing (Barger et al. 2014)", value: 7, unit: "h (approx.)", value_type: OBSERVED_STATISTIC, statistic: "approximate as summarized", source: OCHMO-TB-041}

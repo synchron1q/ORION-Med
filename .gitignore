@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+backend/.venv/
+.venv/
+backend/data/
+*.db
+*.db-wal
+*.db-shm
+.pytest_cache/
+# Node
+frontend/node_modules/
+frontend/dist/
+frontend/test-results/
+frontend/playwright-report/
+# Env
+.env
+# Scratch / local standalone preview
+ridge-hmi.html
